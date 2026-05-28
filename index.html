@@ -52,8 +52,15 @@ body {
 .dashboard-container {
   width: 85% !important;         
   max-width: 1100px !important;  
-  height: auto !important;       /* Оставляем авто-высоту под контент */
-  max-height: 94vh !important;   
+  
+  /* 🔥 ЖЕСТКИЙ ОТСТУП: Теперь он физически расталкивает экран и никогда не исчезнет */
+  margin-top: 35px !important; 
+  
+  height: auto !important;       /* Сжимается под мелкий контент */
+  
+  /* 🔥 НОВЫЙ ПОТОЛОК: Уменьшили до 88vh, чтобы сайт + отступ идеально влезали в 100% экрана ПК */
+  max-height: 88vh !important;   
+  
   background: rgba(13, 13, 13, 0.93) !important; 
   border: 1px solid #222;
   border-radius: 16px;
@@ -62,10 +69,8 @@ body {
   overflow: hidden !important; 
   display: flex !important;         
   flex-direction: column !important; 
-
-  /* 🔥 ГЛАВНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ПРИВЯЗКИ МЕНЮ К ВЕРХУ */
-  justify-content: flex-start !important; /* Намертво прижимает меню навигации к верхнему краю */
-  padding: 0 35px 35px 35px !important;   /* Сделали верхний паддинг 0, чтобы меню прилипло к шапке */
+  justify-content: flex-start !important; 
+  padding: 0 35px 35px 35px !important;   
   box-sizing: border-box;
 }
 

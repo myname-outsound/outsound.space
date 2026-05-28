@@ -539,16 +539,16 @@ body {
 .social-link:hover {
   transform: translateY(-2px);
 }
-    .sub-tabs-container {
+.sub-tabs-container {
   display: flex !important;
-  gap: 10px;
-  border-bottom: 1px solid #222;
-  padding-bottom: 15px;
+  gap: 10px !important;
+  border-bottom: 1px solid #222 !important;
+  padding-bottom: 15px !important;
   
-  /* 🔥 ЖЕЛЕЗНОЕ ВЫРАВНИВАНИЕ НА ПК */
-  max-width: 800px;         /* Ровно по ширине карточек условий */
-  margin: 25px auto !important; /* Центрирует строку и возвращает шикарный отступ сверху (25px) */
-  width: 100%;
+  /* ЦЕНТРИРОВАНИЕ НА ПК */
+  max-width: 800px !important; /* Строго по ширине карточек */
+  margin: 25px auto !important; /* Выравнивает по центру экрана и дает отступ сверху */
+  width: 100% !important;
 }
 /* ==========================================
    НОВАЯ СТРАТЕГИЯ МОБИЛЬНОЙ ОПТИМИЗАЦИИ
@@ -688,6 +688,12 @@ body {
   .form-group label { font-size: 13px !important; }
   .form-input { padding: 12px !important; font-size: 15px !important; }
 }
+      .sub-tabs-container {
+    max-width: 100% !important;
+    margin: 15px 0 !important; /* Убираем центрирование ПК на мобилке */
+    flex-wrap: wrap !important; /* Разрешаем кнопкам переноситься, если экран слишком узкий */
+  }
+
   </style>
 </head>
 <body>

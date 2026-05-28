@@ -524,107 +524,131 @@ body {
    ========================================== */
 @media screen and (max-width: 768px) {
   
-  /* Жестко фиксируем body под высоту экрана телефона и выключаем внешние скроллы */
+  /* Блокируем системный скролл браузера */
   html, body {
     height: 100vh !important;
+    max-height: 100vh !important;
     overflow: hidden !important;
+    background-color: #0d0d0d !important;
   }
 
-  /* Контейнер строго подстраивается под экран и НЕ растет вниз */
+  /* 🔥 ГЛАВНОЕ ИСПРАВЛЕНИЕ: Контейнер теперь занимает ВЕСЬ экран смартфона */
   .dashboard-container {
-    width: 95% !important;              
-    max-width: 1400px !important;       
-    height: 92vh !important; /* Фиксируем высоту, чтобы работал внутренний скролл */
-    background: rgba(13, 13, 13, 0.95) !important;
-    border: 1px solid #222 !important;
-    border-radius: 16px !important;
-    padding: 15px !important; /* Уменьшаем паддинги, чтобы сэкономить место на экране */
+    width: 100% !important;              
+    height: 100vh !important; 
+    max-height: 100vh !important;
+    border: none !important; /* Убираем рамку, чтобы не съедала место */
+    border-radius: 0px !important; /* На весь экран, скругления не нужны */
+    padding: 16px 12px 12px 12px !important; /* Компактные отступы */
     box-sizing: border-box !important;
     overflow: hidden !important; 
     display: flex !important;         
     flex-direction: column !important; 
+    background: #0d0d0d !important;
   }
 
-  /* Меню навигации: делаем его компактной горизонтальной лентой со скроллом, 
-     чтобы кнопки не ломали ряды и не плодили высоту */
+  /* Меню навигации: удобная горизонтальная лента для пальца */
   .button-grid {
-    position: relative !important; /* Снимаем абсолютное позиционирование на мобилке */
+    position: relative !important; 
     display: flex !important;
     flex-wrap: nowrap !important;
     overflow-x: auto !important; 
     gap: 8px !important;
-    padding: 0 0 10px 0 !important; /* Сбрасываем огромные ПК-отступы */
-    margin-bottom: 15px !important;
+    padding: 0 0 10px 0 !important; 
+    margin-bottom: 20px !important;
     border-bottom: 1px solid #222 !important;
+    flex-shrink: 0 !important;
   }
-  
-  /* Прячем серый мобильный скроллбар у меню */
   .button-grid::-webkit-scrollbar { display: none !important; }
 
   .nav-button {
-    padding: 10px 16px !important; 
-    font-size: 11px !important;   
-    min-width: max-content !important; /* Кнопки не сжимаются */
+    padding: 12px 18px !important; /* Делаем кнопки крупнее, чтобы удобно тапать */
+    font-size: 13px !important;   
+    min-width: max-content !important; 
     flex-shrink: 0 !important;
   }
 
-  /* Возвращаем жесткое ограничение высоты для страниц, 
-     чтобы работал наш розовый скроллбар */
+  /* 🔥 РАЗМЕРЫ ТЕКСТА: Возвращаем нормальный крупный читаемый масштаб */
+  h1 { 
+    font-size: 26px !important; 
+    line-height: 1.2 !important; 
+    margin-top: 10px !important;
+    margin-bottom: 15px !important; 
+  }
+  
+  .description { 
+    font-size: 15px !important; /* Текст стал крупнее и читаемее */
+    line-height: 1.6 !important; 
+    margin-bottom: 25px !important; 
+  }
+  
+  .setup-list { 
+    padding: 14px 16px !important; 
+    margin-bottom: 25px !important; 
+  }
+  .setup-list p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Блок соцсетей делаем крупнее */
+  .social-block {
+    margin-top: 30px !important;
+    gap: 20px !important;
+  }
+  .social-title {
+    font-size: 15px !important;
+  }
+  .social-link {
+    width: 38px !important; /* Иконки стали больше */
+    height: 38px !important;
+  }
+
+  /* Область контента страниц: забирает всё свободное место снизу */
   .page-content {
-    margin-top: 0 !important; /* Сбрасываем ПК-отступ на мобилке */
+    flex-grow: 1 !important;
+    margin-top: 0 !important; 
     max-height: calc(100% - 65px) !important; 
     overflow-y: auto !important; 
-  }
-  
-  .page-content.active-page {
-    display: block !important; 
+    padding-right: 4px !important;
   }
 
-  /* Компактные шрифты */
-  h1 { font-size: 22px !important; margin-bottom: 10px !important; }
-  .description { font-size: 13px !important; line-height: 1.5 !important; }
-  .setup-list { padding: 10px 12px !important; margin-bottom: 15px !important; }
-
-  /* 🔥 ЖЕСТКИЙ ГОРИЗОНТАЛЬНЫЙ СВАЙП ДЛЯ МОБИЛКИ */
+  /* 🔥 Карусель тарифов: идеально под размер экрана */
   .rates-grid {
     display: flex !important;
-    flex-direction: row !important; /* Строго в одну линию вбок! */
-    flex-wrap: nowrap !important;   /* Запрещаем карточкам падать на второй ряд! */
-    overflow-x: auto !important;    /* Включаем прокрутку пальцем влево-вправо */
-    gap: 15px !important;
-    padding-bottom: 20px !important;
-    padding-right: 20px !important;
-    box-sizing: border-box !important;
-    -webkit-overflow-scrolling: touch !important; /* Плавный скролл на айфонах */
+    flex-direction: row !important; 
+    flex-wrap: nowrap !important;   
+    overflow-x: auto !important;    
+    gap: 16px !important;
+    padding-bottom: 15px !important;
+    -webkit-overflow-scrolling: touch !important;
   }
-
-   /* Скрываем системный уродливый скроллбар, оставляем только аккуратный розовый */
   .rates-grid::-webkit-scrollbar { height: 4px !important; }
-  .rates-grid::-webkit-scrollbar-track { background: #111 !important; }
   .rates-grid::-webkit-scrollbar-thumb { background: #ff2d55 !important; border-radius: 10px !important; }
-  
-  /* Красивый розовый горизонтальный ползунок для тарифов на мобилке */
-  .rates-grid::-webkit-scrollbar { height: 4px !important; }
-  .rates-grid::-webkit-scrollbar-thumb { background: #ff2d55 !important; border-radius: 10px; }
 
+  /* Карточки подгоняются под ширину экрана смартфона, чтобы контент внутри не сжимался */
   .rate-card {
-    flex: 0 0 280px !important;    /* Запрещаем им сжиматься или растягиваться */
-    min-width: 280px !important;
-    max-width: 280px !important;
+    flex: 0 0 85vw !important; /* Карточка занимает 85% ширины экрана телефона */
+    min-width: 290px !important;
+    max-width: 340px !important;
   }
+  
+  .rate-price { font-size: 36px !important; }
+  .rate-name { font-size: 20px !important; }
+  .feature-item { font-size: 13px !important; padding: 12px 14px !important; }
 
-  /* Оптимизация окон под мобильные экраны */
+  /* Мобильная адаптация окон заказа */
   .modal-content {
-    width: 95% !important;
-    max-width: 95% !important;
-    padding: 20px 15px !important;
+    width: 92% !important;
+    max-width: 92% !important;
+    padding: 24px 16px !important;
     max-height: 85vh !important;
     overflow-y: auto !important;
   }
-  
-  .form-input { padding: 10px !important; font-size: 14px !important; }
+  .modal-content h2 { font-size: 20px !important; }
+  .form-group label { font-size: 13px !important; }
+  .form-input { padding: 12px !important; font-size: 15px !important; }
 }
-
   </style>
 </head>
 <body>

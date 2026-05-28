@@ -862,7 +862,9 @@ body {
       
       <!-- Подменю для разделения страницы на 2 части -->
       <!-- Подменю для разделения страницы на 2 части -->
-<div style="display: flex; gap: 10px; margin: 0 auto 25px auto; border-bottom: 1px solid #222; padding-bottom: 15px; max-width: 800px; justify-content: flex-start; width: 100%;">
+<!-- Контейнер-обертка для центрирования кнопок на ПК -->
+<div style="max-width: 800px; margin: 0 auto 25px auto; border-bottom: 1px solid #222; padding-bottom: 15px; width: 100%;">
+  <div style="display: flex; gap: 10px; justify-content: flex-start;">
         <button type="button" class="sub-tab-btn active-sub-tab" onclick="switchSubPage('tech-reqs', this)">❗️ Условия проекта</button>
         <button type="button" class="sub-tab-btn" onclick="switchSubPage('payment-terms', this)">💳 Условия оплаты</button>
       </div>
@@ -940,7 +942,7 @@ body {
 
         </div>
       </div>
-
+    </div>
     </div>
 
     <div id="page-videos" class="page-content">

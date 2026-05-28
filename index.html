@@ -4,6 +4,28 @@
   <meta charset="UTF-8">
   <base target="_top">
   <style>
+    .bg-animation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Намертво уводим под основной контент */
+  overflow: hidden;
+  background-color: #0d0d0d;
+}
+
+.bg-animation-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Гифка заполнит экран без искажения пропорций */
+  
+  /* 🔥 МАГИЯ СТИЛЯ: Переводим в ЧБ и делаем полупрозрачной */
+  filter: grayscale(100%) contrast(120%) brightness(30%); 
+  opacity: 0.25; /* Прозрачность 25%, чтобы не мозолила глаза и не мешала читать */
+  
+  pointer-events: none; /* Чтобы мышка сквозь неё кликала по сайту */
+}
 body {
   background-color: #0d0d0d; /* Изменили на черный */
   color: #e0e0e0;
@@ -688,7 +710,13 @@ body {
   </style>
 </head>
 <body>
+    <!-- АНИМАЦИОННЫЙ ЗАДНИЙ ФОН С САМУРАЯМИ -->
+  <div class="bg-animation-overlay">
+    <!-- Сюда вставляем ссылку на черно-белую GIF-анимацию. Можешь заменить URL на свой! -->
+    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXp0ZzVoMW44MDRpYmdxamgxaW1uOXEzcjVodHpmdjlldWwwdGlzYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PJvvewo5mTtXW/giphy.gif" alt="Samurai Background">
+  </div>
 
+  <div class="dashboard-container">
   <div class="dashboard-container">
     
     <!-- МЕНЮ НАВИГАЦИИ (ПЕРЕНЕСЕНО НАВЕРХ И ЗАКРЕПЛЕНО) -->

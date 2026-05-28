@@ -531,24 +531,19 @@ body {
   }
 
   /* Контейнер строго подстраивается под экран и НЕ растет вниз */
-.dashboard-container {
-  width: 95%;              
-  max-width: 1400px;       
-  /* МЕНЯЕМ height: 90vh на авто-высоту. Теперь блок сжимается под контент главной! */
-  height: auto !important; 
-  min-height: auto !important;
-  
-  background: rgba(13, 13, 13, 0.95);
-  border: 1px solid #222;
-  border-radius: 16px;
-  padding: 35px;
-  box-sizing: border-box;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
-  position: relative;
-  overflow: visible !important; /* Позволяет sticky-элементам внутри работать корректно */
-  display: flex;         
-  flex-direction: column; 
-}
+  .dashboard-container {
+    width: 95% !important;              
+    max-width: 1400px !important;       
+    height: 92vh !important; /* Фиксируем высоту, чтобы работал внутренний скролл */
+    background: rgba(13, 13, 13, 0.95) !important;
+    border: 1px solid #222 !important;
+    border-radius: 16px !important;
+    padding: 15px !important; /* Уменьшаем паддинги, чтобы сэкономить место на экране */
+    box-sizing: border-box !important;
+    overflow: hidden !important; 
+    display: flex !important;         
+    flex-direction: column !important; 
+  }
 
   /* Меню навигации: делаем его компактной горизонтальной лентой со скроллом, 
      чтобы кнопки не ломали ряды и не плодили высоту */
@@ -590,24 +585,32 @@ body {
   .description { font-size: 13px !important; line-height: 1.5 !important; }
   .setup-list { padding: 10px 12px !important; margin-bottom: 15px !important; }
 
-  /* 🔥 ГЛАВНАЯ ФИЧА: Горизонтальный свайп тарифов! */
+  /* 🔥 ЖЕСТКИЙ ГОРИЗОНТАЛЬНЫЙ СВАЙП ДЛЯ МОБИЛКИ */
   .rates-grid {
     display: flex !important;
-    flex-direction: row !important; /* Карточки выстраиваются в бок */
-    overflow-x: auto !important;    /* Включаем горизонтальный скролл пальцем */
+    flex-direction: row !important; /* Строго в одну линию вбок! */
+    flex-wrap: nowrap !important;   /* Запрещаем карточкам падать на второй ряд! */
+    overflow-x: auto !important;    /* Включаем прокрутку пальцем влево-вправо */
     gap: 15px !important;
-    padding-bottom: 15px !important;
-    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+    -webkit-overflow-scrolling: touch !important; /* Плавный скролл на айфонах */
   }
+
+   /* Скрываем системный уродливый скроллбар, оставляем только аккуратный розовый */
+  .rates-grid::-webkit-scrollbar { height: 4px !important; }
+  .rates-grid::-webkit-scrollbar-track { background: #111 !important; }
+  .rates-grid::-webkit-scrollbar-thumb { background: #ff2d55 !important; border-radius: 10px !important; }
   
   /* Красивый розовый горизонтальный ползунок для тарифов на мобилке */
   .rates-grid::-webkit-scrollbar { height: 4px !important; }
   .rates-grid::-webkit-scrollbar-thumb { background: #ff2d55 !important; border-radius: 10px; }
 
   .rate-card {
-    min-width: 270px !important; /* Каждая карточка имеет фиксированную ширину */
-    max-width: 270px !important;
-    flex-shrink: 0 !important;   /* Запрещаем им сжиматься */
+    flex: 0 0 280px !important;    /* Запрещаем им сжиматься или растягиваться */
+    min-width: 280px !important;
+    max-width: 280px !important;
   }
 
   /* Оптимизация окон под мобильные экраны */

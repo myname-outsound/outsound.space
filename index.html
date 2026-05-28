@@ -217,17 +217,15 @@ body {
   display: flex !important; 
   gap: 10px; 
   flex-wrap: wrap; 
-  /* ИСПРАВЛЕНИЕ: Меняем absolute на relative, чтобы меню физически находилось внутри контейнера и не обрезалось */
   position: relative !important; 
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
   z-index: 9999 !important; 
-  background: #0d0d0d; 
-  padding: 0 0 15px 0 !important; /* Убираем огромные отступы, оставляем только линию снизу */
+  background: transparent; 
   border-bottom: 1px solid #222;
-  margin-bottom: 20px !important; /* Делаем четкий отступ от контента */
-  flex-shrink: 0 !important; /* ЗАПРЕЩАЕМ меню сжиматься или исчезать */
+  flex-shrink: 0 !important; 
+
+  /* 🌟 ДОБАВЛЯЕМ ОТСТУП СВЕРХУ ДЛЯ КНОПОК */
+  padding: 20px 0 15px 0 !important; /* 20px сверху дадут кнопкам воздух от верхней рамки */
+  margin-bottom: 20px !important; 
 }
 
 .nav-button {

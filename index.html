@@ -486,7 +486,11 @@ body {
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
       text-align: left;
       transition: all 0.3s ease;
-      }
+    
+      /* 🔥 ЖЕСТКОЕ СЖАТИЕ ПОД ТВОИ ГРАНИЦЫ НА ПК */
+      max-width: 900px !important;  /* Плееры больше не будут растягиваться на весь экран */
+      margin: 0 auto 20px auto !important; /* Центрирует карточки плееров на широком мониторе */
+    }
     .case-card:hover {
       border-color: rgba(255, 45, 85, 0.4);
       transform: translateY(-2px);
@@ -847,7 +851,7 @@ body {
         Наглядная демонстрация работы. Нажми Play и переключай тумблеры прямо во время звучания трека, чтобы услышать разницу до и после финального сведения.
       </p>
 
-      <div style="display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; flex-direction: column; gap: 25px; max-width: 900px; margin: 0 auto; width: 100%;">
         
         <!-- КЕЙС №1 -->
         <div class="case-card">

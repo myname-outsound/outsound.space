@@ -534,17 +534,21 @@ body {
 
   /* 🔥 ГЛАВНОЕ ИСПРАВЛЕНИЕ: Контейнер теперь занимает ВЕСЬ экран смартфона */
   .dashboard-container {
-    width: 100% !important;              
-    height: 100vh !important; 
-    max-height: 100vh !important;
-    border: none !important; /* Убираем рамку, чтобы не съедала место */
-    border-radius: 0px !important; /* На весь экран, скругления не нужны */
-    padding: 16px 12px 12px 12px !important; /* Компактные отступы */
+    width: 95% !important; /* Возвращаем аккуратные отступы по бокам */
+    max-width: 1400px !important;       
+    height: auto !important; /* 🌟 Высота теперь подстраивается автоматически! */
+    max-height: none !important; /* Убираем жесткий потолок */
+    min-height: auto !important;
+    
+    background: rgba(13, 13, 13, 0.95) !important;
+    border: 1px solid #222 !important; /* Возвращаем красивую рамку */
+    border-radius: 16px !important; /* И скругления углов */
+    padding: 24px 20px !important; 
     box-sizing: border-box !important;
-    overflow: hidden !important; 
+    overflow: visible !important; /* Чтобы внутренние элементы не обрезались */
     display: flex !important;         
     flex-direction: column !important; 
-    background: #0d0d0d !important;
+    margin: 15px auto !important; /* Центрируем сам контейнер на экране */
   }
 
   /* Меню навигации: удобная горизонтальная лента для пальца */
@@ -604,13 +608,17 @@ body {
     height: 38px !important;
   }
 
-  /* Область контента страниц: забирает всё свободное место снизу */
   .page-content {
-    flex-grow: 1 !important;
-    margin-top: 0 !important; 
-    max-height: calc(100% - 65px) !important; 
-    overflow-y: auto !important; 
-    padding-right: 4px !important;
+    display: none;
+    width: 100% !important;
+    height: auto !important; /* Убираем calc() ограничения */
+    max-height: none !important; 
+    overflow-y: visible !important; /* Выключаем внутренний розовый скролл для главной/тарифов */
+    padding-right: 0 !important;
+  }
+  
+  .page-content.active-page {
+    display: block !important;
   }
 
   /* 🔥 Карусель тарифов: идеально под размер экрана */

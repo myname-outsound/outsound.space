@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <base target="_top">
+  <style>
+body {
+  background-color: transparent;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start;  
+  padding-top: 20px; 
+  /* ВОЗВРАЩАЕМ жесткую привязку к высоте фрейма на ПК */
+  height: 90vh !important; 
+  width: 100vw;            
+  overflow: hidden; /* Выключаем внешний скролл полностью */
+}
+
+.dashboard-container {
+  width: 95%;              
+  max-width: 1400px;       
+  height: 90vh !important; 
+  background: rgba(13, 13, 13, 0.95);
+  border: 1px solid #222;
+  border-radius: 16px;
+  /* МЕНЯЕМ ПАДДИНГ: Сверху делаем стандартные 25px, так как меню больше не абсолютное */
+  padding: 25px 35px 35px 35px !important; 
+  box-sizing: border-box;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  position: relative;
+  overflow: hidden !important; /* Запираем внутренний скролл */
+  display: flex !important;         
+  flex-direction: column !important; /* Элементы идут строго сверху вниз: сначала шапка, потом контент */
+}
+
+    .studio-badge {
+      display: inline-block; /* Заставляет плашку сжиматься по ширине текста */
+      background: #161616;
+      color: #ff2d55;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      border: 1px solid #ff2d55;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: 32px;
+      font-weight: 900;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .description {
+      color: #b3b3b3;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .setup-list {
+      background: #151515;
+      border-left: 3px solid #ff2d55;
+      padding: 12px 18px;
+      margin-bottom: 30px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .setup-list p { margin: 0; font-size: 13.5px; color: #888888; }
+    .setup-list strong { color: #ff2d55; }
+
+    /* СЕТКА ТАРИФОВ */
+    .rates-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      flex-shrink: 0; /* Запрещаем сетке сжиматься или ломать высоту */
+      padding-bottom: 30px; /* Запас снизу, чтобы кнопки "Заказать" не липли к краю */
+    }
+
+    .rate-card {
+      flex: 1;
+      min-width: 280px;
+      background: #141414;
+      border: 1px solid #252525;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .rate-header {
+      padding: 20px;
+      text-align: center;
+      background: #1a1a1a;
+      border-bottom: 1px solid #252525;
+    }
+
+    .rate-price {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .rate-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ff2d55;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .rate-time {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .features-list {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    .feature-item {
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .card-single .feature-item.active { background: linear-gradient(90deg, #d4fc79 0%, #96e6a1 100%); }
+    .card-pro .feature-item.active { background: linear-gradient(90deg, #00ff87 0%, #60efff 100%); }
+    .card-max .feature-item.active { background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%); }
+
+    .feature-item.item-revisions {
+      background: linear-gradient(90deg, #ff007f 0%, #ff758c 100%) !important;
+      color: #fff !important;
+    }
+
+    .feature-item.disabled {
+      background: #1d1d1d !important;
+      color: #555 !important;
+      border: 1px dashed #2d2d2d;
+      box-shadow: none;
+    }
+
+    .order-btn {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 15px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .order-btn:hover {
+      background: #ff2d55;
+      box-shadow: 0 -5px 20px rgba(255, 45, 85, 0.4);
+    }
+
+/* ЗАКРЕПЛЕННОЕ МЕНЮ НАВИГАЦИИ НАВЕРХУ */
+.button-grid { 
+  display: flex !important; 
+  gap: 10px; 
+  flex-wrap: wrap; 
+  /* ИСПРАВЛЕНИЕ: Меняем absolute на relative, чтобы меню физически находилось внутри контейнера и не обрезалось */
+  position: relative !important; 
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important; 
+  background: #0d0d0d; 
+  padding: 0 0 15px 0 !important; /* Убираем огромные отступы, оставляем только линию снизу */
+  border-bottom: 1px solid #222;
+  margin-bottom: 20px !important; /* Делаем четкий отступ от контента */
+  flex-shrink: 0 !important; /* ЗАПРЕЩАЕМ меню сжиматься или исчезать */
+}
+
+.nav-button {
+  background-color: #161616; color: #fff; border: 1px solid #2d2d2d;
+  padding: 14px 18px; border-radius: 6px; font-size: 11px; font-weight: 700;
+  cursor: pointer; text-transform: uppercase; flex: 1; min-width: 130px;
+  display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;
+}
+.nav-button:hover, .nav-button.active { background-color: #ff2d55; border-color: #ff2d55; box-shadow: 0 0 15px rgba(255, 45, 85, 0.5); }
+    
+.page-content { 
+  display: none; 
+  width: 100%;
+  margin-top: 0 !important; 
+  /* ИСПРАВЛЕНИЕ: Заставляем контент забирать всю оставшуюся высоту под меню */
+  flex-grow: 1 !important; 
+  height: calc(100% - 60px) !important;
+  max-height: calc(100% - 60px) !important; 
+  overflow-y: auto !important; /* Розовый скроллбар крутит только эту часть */
+  padding-right: 8px;
+  box-sizing: border-box;
+}
+
+   /* Настройки кастомного розового скроллбара */
+    .page-content::-webkit-scrollbar { 
+      width: 6px !important; /* Делаем полосу тонкой и аккуратной */
+      display: block !important;
+    }
+    .page-content::-webkit-scrollbar-track { 
+      background: #111111 !important; /* Черная дорожка, чтобы не выделялась на фоне */
+      border-radius: 10px;
+    }
+    .page-content::-webkit-scrollbar-thumb { 
+      background: #ff2d55 !important; /* Наш фирменный ярко-розовый цвет */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 45, 85, 0.5); /* Неоновый отсвет */
+    }
+    .page-content::-webkit-scrollbar-thumb:hover { 
+      background: #e02447 !important; /* Чуть темнее при наведении курсора */
+    }
+
+    /* МОДАЛЬНОЕ ОКНО ЗАКАЗА */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); display: flex; justify-content: center;
+      align-items: center; z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.3s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-content {
+      background: #121212; border: 1px solid #ff2d55; border-radius: 12px;
+      padding: 30px; width: 100%; max-width: 450px; box-shadow: 0 0 30px rgba(255,45,85,0.2);
+    }
+    .modal-content h2 { margin-top: 0; color: #fff; font-size: 22px; text-transform: uppercase; }
+    .modal-content h2 span { color: #ff2d55; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 12px; color: #888; margin-bottom: 6px; text-transform: uppercase; }
+    .form-input {
+      width: 100%; background: #1a1a1a; border: 1px solid #333; padding: 12px;
+      color: #fff; border-radius: 6px; box-sizing: border-box; font-family: inherit;
+    }
+    .form-input:focus { border-color: #ff2d55; outline: none; }
+    .submit-btn {
+      background: #ff2d55; color: #fff; border: none; width: 100%; padding: 14px;
+      border-radius: 6px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    }
+    .submit-btn:hover { box-shadow: 0 0 15px rgba(255, 45, 85, 0.6); }
+    .close-modal { float: right; color: #555; cursor: pointer; font-size: 20px; }
+    .close-modal:hover { color: #fff; }
+        /* Стили для подвкладок условий */
+    .sub-tab-btn {
+      background: #141414;
+      color: #888;
+      border: 1px solid #222;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .sub-tab-btn:hover { color: #fff; border-color: #444; }
+    .sub-tab-btn.active-sub-tab {
+      background: #ff2d55;
+      color: #fff;
+      border-color: #ff2d55;
+      box-shadow: 0 0 15px rgba(255, 45, 85, 0.4);
+    }
+
+    /* Карточки условий */
+    .terms-card {
+      background: #141414;
+      border-left: 3px solid #333;
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      border: 1px solid #222;
+      border-left: 3px solid #ff2d55;
+    }
+    .terms-card-header {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .terms-card-text {
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.6;
+    }
+    .terms-card-text strong { color: #ff2d55; }
+
+    /* Логика скрытия подразделов */
+    .sub-page-content { display: none; }
+    .sub-page-content.active-sub-page { display: block; }
+    /* СТИЛИ ДЛЯ РОЗОВОГО ТОГЛА */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 5px 0;
+    }
+    
+    .toggle-label {
+      font-size: 13px;
+      color: #bbb;
+      user-select: none;
+    }
+    
+    /* Розовая неоновая ссылка */
+    .terms-link {
+      color: #ff2d55;
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px dashed rgba(255, 45, 85, 0.4);
+      transition: all 0.2s;
+    }
+    .terms-link:hover {
+      color: #fff;
+      border-bottom-color: #fff;
+      text-shadow: 0 0 10px rgba(255, 45, 85, 0.6);
+    }
+
+    /* Сам переключатель (основа) */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 42px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    
+    /* Дорожка тогла */
+    .slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #2a2a2a; border: 1px solid #444; transition: .3s; border-radius: 34px;
+    }
+    /* Кругляшок внутри */
+    .slider:before {
+      position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px;
+      background-color: #888; transition: .3s; border-radius: 50%;
+    }
+    
+    /* Состояние ВКЛЮЧЕНО (Розовый неон) */
+    input:checked + .slider { background-color: rgba(255, 45, 85, 0.2); border-color: #ff2d55; box-shadow: 0 0 10px rgba(255, 45, 85, 0.3); }
+    input:checked + .slider:before { background-color: #ff2d55; transform: translateX(20px); box-shadow: 0 0 8px #ff2d55; }
+
+    /* Стили для заблокированной кнопки */
+    .submit-btn.disabled-btn {
+      background: #222 !important;
+      color: #555 !important;
+      cursor: not-allowed !important;
+      box-shadow: none !important;
+      border: 1px solid #333;
+    }
+    /* ОГНЕННЫЙ АНИМЕ-ВЗРЫВ (ИСПРАВЛЕННЫЙ) */
+    .explosion-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 10, 10, 0.95); 
+      display: none; /* Изначально полностью выключаем из дерева документа */
+      justify-content: center; align-items: center; 
+      z-index: 9999; /* Поверх абсолютно всего */
+    }
+    /* При активации принудительно включаем flex-отображение */
+    .explosion-overlay.active-boom { display: flex !important; }
+
+    .anime-explosion { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; }
+
+    /* Огненное ядро */
+    .core-glow {
+      position: absolute; width: 15px; height: 15px; background: #fff; border-radius: 50%;
+      box-shadow: 0 0 60px 40px #ff2d55, 0 0 100px 70px #ff7500, 0 0 150px 100px #ff003c;
+    }
+    .active-boom .core-glow { animation: explodeCore 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
+
+    /* Ударная аниме-волна */
+    .shockwave {
+      position: absolute; border: 5px solid #fff; border-radius: 50%; width: 10px; height: 10px; opacity: 0;
+      box-shadow: 0 0 25px #ff2d55, inset 0 0 25px #ff7500;
+    }
+    .active-boom .shockwave { animation: waveExpand 0.8s cubic-bezier(0, 0.6, 0.2, 1) forwards; animation-delay: 0.1s; }
+
+    /* Огненные искры / частицы */
+    .fire-particle { position: absolute; width: 14px; height: 14px; background: #ff7500; border-radius: 50%; opacity: 0; box-shadow: 0 0 15px #ff2d55; }
+    .active-boom .p1 { animation: particleFly1 1.2s ease-out forwards; animation-delay: 0.1s; }
+    .active-boom .p2 { animation: particleFly2 1.1s ease-out forwards; animation-delay: 0.1s; background: #ff2d55; }
+    .active-boom .p3 { animation: particleFly3 1.3s ease-out forwards; animation-delay: 0.1s; }
+    .active-boom .p4 { animation: particleFly4 1.0s ease-out forwards; animation-delay: 0.1s; background: #fff; }
+    .active-boom .p5 { animation: particleFly5 1.4s ease-out forwards; animation-delay: 0.1s; }
+    .active-boom .p6 { animation: particleFly6 1.2s ease-out forwards; animation-delay: 0.1s; background: #ff2d55; }
+
+    /* Дерзкий текст поверх взрыва */
+    .explosion-text {
+      position: absolute; color: #fff; font-size: 32px; font-weight: 900; text-transform: uppercase;
+      letter-spacing: 3px; text-shadow: 0 0 25px #ff2d55, 0 0 50px #ff7500, 0 0 10px #000;
+      opacity: 0; transform: scale(0.5); white-space: nowrap;
+    }
+    .active-boom .explosion-text { animation: textPop 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; animation-delay: 0.3s; }
+
+    /* АНИМАЦИИ КЛЮЧЕВЫХ КАДРОВ */
+    @keyframes explodeCore {
+      0% { transform: scale(0.1); opacity: 1; background: #fff; }
+      40% { transform: scale(15); background: #ff7500; opacity: 1; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+    @keyframes waveExpand {
+      0% { transform: scale(1); opacity: 1; border-width: 12px; }
+      100% { transform: scale(45); opacity: 0; border-width: 1px; filter: blur(5px); }
+    }
+    @keyframes textPop {
+      0% { transform: scale(0.3); opacity: 0; }
+      12% { transform: scale(1.1); opacity: 1; }
+      18% { transform: scale(1); opacity: 1; }
+      85% { transform: scale(1); opacity: 1; filter: blur(0px); }
+      100% { transform: scale(1.4); opacity: 0; filter: blur(15px); }
+    }
+    @keyframes particleFly1 { 0% { transform: translate(0,0) scale(2); opacity: 1; } 100% { transform: translate(-220px, -100px) scale(0); opacity: 0; } }
+    @keyframes particleFly2 { 0% { transform: translate(0,0) scale(2.5); opacity: 1; } 100% { transform: translate(190px, -180px) scale(0); opacity: 0; } }
+    @keyframes particleFly3 { 0% { transform: translate(0,0) scale(1.8); opacity: 1; } 100% { transform: translate(-120px, 220px) scale(0); opacity: 0; } }
+    @keyframes particleFly4 { 0% { transform: translate(0,0) scale(2.2); opacity: 1; } 100% { transform: translate(240px, 110px) scale(0); opacity: 0; } }
+    @keyframes particleFly5 { 0% { transform: translate(0,0) scale(1.5); opacity: 1; } 100% { transform: translate(-40px, -250px) scale(0); opacity: 0; } }
+    @keyframes particleFly6 { 0% { transform: translate(0,0) scale(2); opacity: 1; } 100% { transform: translate(140px, 190px) scale(0); opacity: 0; } }
+    /* СТИЛИ ИНТЕРАКТИВНОГО ПЛЕЕРА */
+    .case-card {
+      background: #141414; border: 1px solid #222; border-radius: 12px; padding: 25px;
+      display: flex; flex-direction: column; gap: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      text-align: left;
+    }
+    .case-title { font-size: 16px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+    .case-desc { font-size: 13px; color: #888; line-height: 1.5; }
+    .case-desc strong { color: #ff2d55; }
+    .ab-player { background: #1a1a1a; border-radius: 8px; padding: 15px; border: 1px solid #2d2d2d; }
+    .player-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 15px; flex-wrap: wrap; }
+    .play-btn { background: #ff2d55; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .play-btn:hover { box-shadow: 0 0 15px rgba(255, 45, 85, 0.5); transform: translateY(-1px); }
+    .play-btn.playing { background: #fff; color: #000; }
+    .toggle-switch-group { display: flex; background: #111; padding: 3px; border-radius: 6px; border: 1px solid #2a2a2a; }
+    .ab-toggle { background: transparent; color: #555; border: none; padding: 8px 18px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; border-radius: 4px; transition: all 0.2s; }
+    .ab-toggle.active-toggle { background: #2a2a2a; color: #fff; }
+    .ab-toggle.active-toggle:nth-child(2) { background: #ff2d55; color: #fff; box-shadow: 0 0 10px rgba(255, 45, 85, 0.4); }
+    .progress-bar-container { width: 100%; height: 6px; background: #222; border-radius: 3px; cursor: pointer; margin-bottom: 8px; position: relative; }
+    .progress-fill { height: 100%; width: 0%; background: #ff2d55; border-radius: 3px; box-shadow: 0 0 8px #ff2d55; transition: width 0.1s linear; }
+    .time-display { font-size: 11px; color: #555; font-family: monospace; text-align: right; }
+/* СТИЛИ ДЛЯ БЛОКА СОЦ. СЕТЕЙ */
+/* ОБНОВЛЕННЫЙ ЦЕНТРИРОВАННЫЙ БЛОК СОЦСЕТЕЙ */
+.social-block {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Центрирует элементы внутри блока */
+  gap: 15px;
+  margin: 25px auto 0 auto; /* Первая цифра 25px — отступ сверху от сетапа. auto — центрирует сам блок */
+  padding: 5px 0;
+  width: fit-content; /* Заставляет блок сжиматься до размеров контента для точного центрирования */
+}
+
+.social-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.social-link {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* Цвет иконок по умолчанию */
+.social-link svg {
+  width: 100%;
+  height: 100%;
+  fill: #555555;
+  transition: fill 0.3s ease, filter 0.3s ease;
+}
+
+/* Ховер-эффект для Telegram (Фирменный голубой неон) */
+.social-link.tg-link:hover svg {
+  fill: #0088cc;
+  filter: drop-shadow(0 0 8px rgba(0, 136, 204, 0.6));
+}
+
+/* Ховер-эффект для VK (Фирменный синий неон) */
+.social-link.vk-link:hover svg {
+  fill: #0077ff;
+  filter: drop-shadow(0 0 8px rgba(0, 119, 255, 0.6));
+}
+
+/* Легкое покачивание иконки при наведении */
+.social-link:hover {
+  transform: translateY(-2px);
+}
+/* ==========================================
+   НОВАЯ СТРАТЕГИЯ МОБИЛЬНОЙ ОПТИМИЗАЦИИ
+   ========================================== */
+@media screen and (max-width: 768px) {
+  
+  /* Жестко фиксируем body под высоту экрана телефона и выключаем внешние скроллы */
+  html, body {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  /* Контейнер строго подстраивается под экран и НЕ растет вниз */
+.dashboard-container {
+  width: 95%;              
+  max-width: 1400px;       
+  /* МЕНЯЕМ height: 90vh на авто-высоту. Теперь блок сжимается под контент главной! */
+  height: auto !important; 
+  min-height: auto !important;
+  
+  background: rgba(13, 13, 13, 0.95);
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 35px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  position: relative;
+  overflow: visible !important; /* Позволяет sticky-элементам внутри работать корректно */
+  display: flex;         
+  flex-direction: column; 
+}
+
+  /* Меню навигации: делаем его компактной горизонтальной лентой со скроллом, 
+     чтобы кнопки не ломали ряды и не плодили высоту */
+  .button-grid {
+    position: relative !important; /* Снимаем абсолютное позиционирование на мобилке */
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important; 
+    gap: 8px !important;
+    padding: 0 0 10px 0 !important; /* Сбрасываем огромные ПК-отступы */
+    margin-bottom: 15px !important;
+    border-bottom: 1px solid #222 !important;
+  }
+  
+  /* Прячем серый мобильный скроллбар у меню */
+  .button-grid::-webkit-scrollbar { display: none !important; }
+
+  .nav-button {
+    padding: 10px 16px !important; 
+    font-size: 11px !important;   
+    min-width: max-content !important; /* Кнопки не сжимаются */
+    flex-shrink: 0 !important;
+  }
+
+  /* Возвращаем жесткое ограничение высоты для страниц, 
+     чтобы работал наш розовый скроллбар */
+  .page-content {
+    margin-top: 0 !important; /* Сбрасываем ПК-отступ на мобилке */
+    max-height: calc(100% - 65px) !important; 
+    overflow-y: auto !important; 
+  }
+  
+  .page-content.active-page {
+    display: block !important; 
+  }
+
+  /* Компактные шрифты */
+  h1 { font-size: 22px !important; margin-bottom: 10px !important; }
+  .description { font-size: 13px !important; line-height: 1.5 !important; }
+  .setup-list { padding: 10px 12px !important; margin-bottom: 15px !important; }
+
+  /* 🔥 ГЛАВНАЯ ФИЧА: Горизонтальный свайп тарифов! */
+  .rates-grid {
+    display: flex !important;
+    flex-direction: row !important; /* Карточки выстраиваются в бок */
+    overflow-x: auto !important;    /* Включаем горизонтальный скролл пальцем */
+    gap: 15px !important;
+    padding-bottom: 15px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Красивый розовый горизонтальный ползунок для тарифов на мобилке */
+  .rates-grid::-webkit-scrollbar { height: 4px !important; }
+  .rates-grid::-webkit-scrollbar-thumb { background: #ff2d55 !important; border-radius: 10px; }
+
+  .rate-card {
+    min-width: 270px !important; /* Каждая карточка имеет фиксированную ширину */
+    max-width: 270px !important;
+    flex-shrink: 0 !important;   /* Запрещаем им сжиматься */
+  }
+
+  /* Оптимизация окон под мобильные экраны */
+  .modal-content {
+    width: 95% !important;
+    max-width: 95% !important;
+    padding: 20px 15px !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+  }
+  
+  .form-input { padding: 10px !important; font-size: 14px !important; }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- МЕНЮ НАВИГАЦИИ (ПЕРЕНЕСЕНО НАВЕРХ И ЗАКРЕПЛЕНО) -->
+    <div class="button-grid">
+      <button class="nav-button active" onclick="switchPage('page-home', this)">🏠 Главная</button>
+      <button class="nav-button" onclick="switchPage('page-examples', this)">🔊 Примеры</button>
+      <button class="nav-button" onclick="switchPage('page-rates', this)">🎚️ Тарифы</button>
+      <button class="nav-button" onclick="switchPage('page-mastering', this)">🎛️ Условия</button>
+      <button class="nav-button" onclick="switchPage('page-videos', this)">🎬 Videos</button>
+    </div>
+
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
+    <div id="page-home" class="page-content active-page" style="display: block;">
+      <div class="studio-badge">OUT SOUND SITE / SETUP BACKED</div>
+      <h1>Remember, you are the sound.</h1>
+      <p class="description">
+        3+ года в сведении, где каждый трек — это хирургическая точность и плотный коммерческий баланс. 
+        Я не продаю громкие имена артистов, я продаю звук, который готов конкурировать на любых стриминговых площадках. 
+        Твой исходник — мой финальный мастер. Погнали делать грязь.
+      </p>
+      <div class="setup-list">
+        <p>Контроль на честном сетапе: мониторы <strong>Yamaha HS5</strong>, наушники <strong>DT 990 Pro</strong>, <strong>ATH-M50x</strong>, интерфейс <strong>MiniFuse</strong>.</p>
+</div>
+        <!-- БЛОК СОЦ. СЕТЕЙ -->
+<div class="social-block">
+  <span class="social-title">Соцсети:</span>
+  
+  <!-- Ссылка на Telegram -->
+  <a href="https://t.me/NoflowshQa" target="_blank" class="social-link tg-link" title="Telegram">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.48 2.75-2.7.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-2.04 1.29-5.77 3.81-.55.38-1.05.56-1.5.55-.5-.01-1.46-.28-2.17-.51-.86-.28-1.54-.43-1.48-.91.03-.25.38-.51 1.05-.78 4.12-1.79 6.86-2.97 8.23-3.53 3.92-1.61 4.73-1.89 5.26-1.9.12 0 .38.03.55.17.14.12.18.28.2.42-.02.08-.02.21-.03.38z"/>
+    </svg>
+  </a>
+
+  <!-- Ссылка на VK -->
+  <a href="https://vk.com/outsound_mix" target="_blank" class="social-link vk-link" title="ВКонтакте">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5.29 11.59c.14.14.31.25.47.38.25.19.51.38.74.6.3.3.57.62.77.99.1.19.17.39.18.61 0 .38-.17.69-.47.88-.23.14-.5.18-.77.18h-2.31c-.32 0-.61-.09-.85-.31-.22-.2-.39-.45-.55-.7-.28-.43-.54-.87-.85-1.28-.15-.2-.33-.38-.56-.47-.32-.12-.6-.04-.84.2-.23.23-.34.53-.38.84-.04.38-.03.77-.07 1.15-.03.31-.19.52-.49.58-.15.03-.31.03-.46.03-1.12 0-2.17-.34-3.1-1-1-.71-1.76-1.62-2.41-2.65-.67-1.07-1.19-2.22-1.63-3.41-.09-.25-.04-.46.18-.61.16-.11.35-.14.54-.14h2.32c.32 0 .58.15.73.44.38.74.83 1.44 1.34 2.11.16.21.34.41.57.55.26.16.51.11.69-.14.12-.17.18-.38.21-.59.08-.66.07-1.32-.12-1.97-.08-.28-.27-.47-.55-.54-.12-.03-.1-.06-.05-.13.11-.15.29-.22.48-.22h3.19c.27.03.47.2.52.47.12.65.12 1.3 0 1.95-.04.25-.03.5.09.73.13.25.39.31.62.16.23-.15.42-.36.59-.57.51-.65.93-1.35 1.28-2.1.09-.2.24-.34.48-.36h2.47c.07 0 .15 0 .22.02.26.05.42.23.41.5-.01.32-.12.62-.25.91-.4 1.01-.94 1.94-1.57 2.81-.22.3-.47.59-.69.89-.25.32-.24.58.02.9z"/>
+    </svg>
+  </a>
+      </div>
+    </div>
+
+    <div id="page-rates" class="page-content">
+      <div class="studio-badge" style="width: fit-content; align-self: flex-start;">OUT SOUND SITE / PRICING</div>
+      <h1>🎚️ ТАРИФЫ НА СВЕДЕНИЕ</h1>
+      <div class="rates-grid">
+        
+        <!-- SINGLE PACK -->
+        <div class="rate-card card-single">
+          <div class="rate-header">
+            <div class="rate-price">1 000 ₽</div>
+            <div class="rate-name">SINGLE PACK</div>
+            <div class="rate-time">⏳ Срок: до 6 дней</div>
+          </div>
+          <div class="features-list">
+            <div class="feature-item active">▷ Реставрация и чистка вокала (De-noise, клики, вздохи)</div>
+            <div class="feature-item active">🎙️ Тюнинг вокала (Auto-Tune)</div>
+            <div class="feature-item active">🎛️ Частотный баланс</div>
+            <div class="feature-item active">▷ Динамика микса</div>
+            <div class="feature-item active">🌋 Ламповое насыщение и гармоники (Плотность и жир)</div>
+            <div class="feature-item active">👯 Панорамирование и создание бэков / даблов</div>
+            <div class="feature-item disabled">❌ Кастомный Саунд-дизайн (Эффекты, дропы, разгоны)</div>
+            <div class="feature-item disabled">❌ Сведение фитов / коллабораций</div>
+            <div class="feature-item disabled">❌ Полное сведение по дорожкам (Multitrack)</div>
+            <div class="feature-item item-revisions">🎯 Правки до 2 шт.</div>
+          </div>
+          <button class="order-btn" onclick="openModal('SINGLE PACK', '600 ₽')">Заказать</button>
+        </div>
+
+        <!-- PRO MIX -->
+        <div class="rate-card card-pro">
+          <div class="rate-header">
+            <div class="rate-price">1 500 ₽</div>
+            <div class="rate-name">PRO MIX</div>
+            <div class="rate-time">⏳ Срок: до 7 дней</div>
+          </div>
+          <div class="features-list">
+            <div class="feature-item active">▷ Реставрация и чистка вокала (De-noise, клики, вздохи)</div>
+            <div class="feature-item active">🎯 Хирургический ручной тюнинг (или Auto-Tune)</div>
+            <div class="feature-item active">🎛️ Частотный баланс</div>
+            <div class="feature-item active">▷ Динамика микса</div>
+            <div class="feature-item active">🌋 Ламповое насыщение и гармоники (Плотность и жир)</div>
+            <div class="feature-item active">👯 Панорамирование и создание бэков / даблов</div>
+            <div class="feature-item active">⚡ Кастомный Саунд-дизайн (Эффекты, дропы, разгоны)</div>
+            <div class="feature-item disabled">❌ Сведение фитов / коллабораций</div>
+            <div class="feature-item disabled">❌ Полное сведение по дорожкам (Multitrack)</div>
+            <div class="feature-item item-revisions">🎯 Правки до 4 шт.</div>
+          </div>
+          <button class="order-btn" onclick="openModal('PRO MIX', '800 ₽')">Заказать</button>
+        </div>
+
+        <!-- MAX PACK -->
+        <div class="rate-card card-max">
+          <div class="rate-header">
+            <div class="rate-price">2 000 ₽</div>
+            <div class="rate-name">MAX PACK</div>
+            <div class="rate-time">⏳ Срок: до 9 дней</div>
+          </div>
+          <div class="features-list">
+            <div class="feature-item active">▷ Реставрация и чистка вокала (De-noise, клики, вздохи)</div>
+            <div class="feature-item active">🎯 Хирургический ручной тюнинг (или Auto-Tune)</div>
+            <div class="feature-item active">🎛️ Частотный баланс</div>
+            <div class="feature-item active">▷ Динамика микса</div>
+            <div class="feature-item active">🌋 Ламповое насыщение и гармоники (Плотность и жир)</div>
+            <div class="feature-item active">👯 Панорамирование и создание бэков / даблов</div>
+            <div class="feature-item active">⚡ Кастомный Саунд-дизайн (Эффекты, дропы, разгоны)</div>
+            <div class="feature-item active">👥 Сведение фитов / коллабораций</div>
+            <div class="feature-item active">🎼 Полное сведение по дорожкам (Multitrack)</div>
+            <div class="feature-item item-revisions">🎯 Безлимитные правки (∞)</div>
+          </div>
+          <button class="order-btn" onclick="openModal('MAX PACK', '1 000 ₽')">Заказать</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ДРУГИЕ СЕКЦИИ -->
+    <!-- 3. СТРАНИЦА ПРИМЕРОВ (ИНТЕРАКТИВНЫЕ КЕЙСЫ) -->
+    <div id="page-examples" class="page-content">
+      <div class="studio-badge" style="width: fit-content; align-self: flex-start;">OUT SOUND SITE / CASES</div>
+      <h1>🔊 Анатомия звука: ДО / ПОСЛЕ</h1>
+      <p class="description" style="margin-bottom: 30px;">
+        Наглядная демонстрация работы. Нажми Play и переключай тумблеры прямо во время звучания трека, чтобы услышать разницу до и после финального сведения.
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 25px;">
+        
+        <!-- КЕЙС №1 -->
+        <div class="case-card">
+          <div class="case-info">
+            <div class="case-title">Сингл: Трек #1 (Hip-Hop / Trap)</div>
+            <div class="case-desc"><strong>Задача:</strong> Собрать разваливающийся низ бита, вычистить грязь в середине, усадить даблы по панораме и придать вокалу коммерческий "жир".</div>
+          </div>
+          
+           <div class="ab-player" data-before="https://s3.cloud.ru/bucket-99371b/ambient9.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=758b8271-7a27-48d4-a881-b09afeaae1bf%3A52e4c16ef68f1f923f826f92044f7dd0%2F20260521%2Fru-central-1%2Fs3%2Faws4_request&X-Amz-Date=20260521T192427Z&X-Amz-Expires=604800&X-Amz-Signature=29cea9e6626fb7f1163607543f9d545018a801f62b6b34848c177f0fadfa4545&X-Amz-SignedHeaders=host&response-content-disposition=attachment&x-amz-checksum-mode=ENABLED&x-id=GetObject" data-after="https://s3.cloud.ru/bucket-99371b/Project_160.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=758b8271-7a27-48d4-a881-b09afeaae1bf%3A52e4c16ef68f1f923f826f92044f7dd0%2F20260521%2Fru-central-1%2Fs3%2Faws4_request&X-Amz-Date=20260521T200335Z&X-Amz-Expires=604800&X-Amz-Signature=d1309c46d6629e4d81c8bef8771218f510b06d1d2fa70c017b2796e19118dbd0&X-Amz-SignedHeaders=host&response-content-disposition=attachment&x-amz-checksum-mode=ENABLED&x-id=GetObject">
+            <div class="player-controls">
+              <button type="button" class="play-btn" onclick="togglePlay(this)">▶ ПОГНАЛИ</button>
+              <div class="toggle-switch-group">
+                <button type="button" class="ab-toggle active-toggle" onclick="switchAudio(this, 'before')">ДО</button>
+                <button type="button" class="ab-toggle" onclick="switchAudio(this, 'after')">ПОСЛЕ 🔥</button>
+              </div>
+            </div>
+            <div class="progress-bar-container" onclick="seekAudio(event, this)">
+              <div class="progress-fill"></div>
+            </div>
+            <div class="time-display">0:00 / 0:00</div>
+          </div>
+        </div>
+
+        <!-- КЕЙС №2 -->
+        <div class="case-card">
+          <div class="case-info">
+            <div class="case-title">Сингл: Трек #2 (Pop / R&B)</div>
+            <div class="case-desc"><strong>Задача:</strong> Мягкий ручной тюнинг вокала (Melodyne), создание глубокого пространственного эффекта, плотный и чистый баланс с инструменталом.</div>
+          </div>
+          <div class="ab-player" data-before="https://google.com" data-after="https://google.com">
+            <div class="player-controls">
+              <button type="button" class="play-btn" onclick="togglePlay(this)">▶ ПОГНАЛИ</button>
+              <div class="toggle-switch-group">
+                <button type="button" class="ab-toggle active-toggle" onclick="switchAudio(this, 'before')">ДО</button>
+                <button type="button" class="ab-toggle" onclick="switchAudio(this, 'after')">ПОСЛЕ 🔥</button>
+              </div>
+            </div>
+            <div class="progress-bar-container" onclick="seekAudio(event, this)">
+              <div class="progress-fill"></div>
+            </div>
+            <div class="time-display">0:00 / 0:00</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- СЕКЦИЯ 4: УСЛОВИЯ (ТАБЫ) -->
+    <div id="page-mastering" class="page-content">
+      <div class="studio-badge" style="width: fit-content; align-self: flex-start;">OUT SOUND SITE / TERMS</div>
+      <h1>📋 Условия сотрудничества</h1>
+      
+      <!-- Подменю для разделения страницы на 2 части -->
+      <div style="display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid #222; padding-bottom: 15px;">
+        <button type="button" class="sub-tab-btn active-sub-tab" onclick="switchSubPage('tech-reqs', this)">❗️ Условия проекта</button>
+        <button type="button" class="sub-tab-btn" onclick="switchSubPage('payment-terms', this)">💳 Условия оплаты</button>
+      </div>
+
+      <!-- ПОДРАЗДЕЛ 1: ТЕХНИЧЕСКИЕ ТРЕБОВАНИЯ -->
+      <div id="tech-reqs" class="sub-page-content active-sub-page">
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          
+          <div class="terms-card">
+            <div class="terms-card-header">🔉 Частота дискретизации и разрядность</div>
+            <div class="terms-card-text">Минимальная частота дискретизации: <strong>44100 кГц</strong>. Минимальная разрядность: <strong>24 бита</strong>.</div>
+          </div>
+
+          <div class="terms-card">
+            <div class="terms-card-header">🔈 Формат аудио дорожек</div>
+            <div class="terms-card-text">Все аудио дорожки должны быть предоставлены в формате <strong>WAV</strong>. Если инструментал изначально был в формате MP3, его следует оставить в исходном качестве.</div>
+          </div>
+
+          <div class="terms-card">
+            <div class="terms-card-header">▶️ Начало дорожек</div>
+            <div class="terms-card-text">Все дорожки должны строго начинаться с <strong>0 секунды</strong> инструментала. Это обеспечит правильное выравнивание в режиме Time Warp.</div>
+          </div>
+
+          <div class="terms-card">
+            <div class="terms-card-header">🗣 Динамический запас "Headroom"</div>
+            <div class="terms-card-text">При записи необходимо оставлять динамический запас (Headroom). Уровень громкости записываемого материала должен быть ниже максимального уровня, чтобы избежать клиппирования. Рекомендуется оставлять минимум <strong>-6 дБ Headroom</strong>.</div>
+          </div>
+
+          <div class="terms-card">
+            <div class="terms-card-header">🤔 Предпочтения по стилю звучания</div>
+            <div class="terms-card-text">Пожалуйста, сообщайте о своих пожеланиях по стилю, бэк-вокалу и эффектам заранее, до начала работ. Предоставление <strong>референс-трека</strong> в форме заказа рекомендуется.</div>
+          </div>
+
+        </div>
+      </div>
+      <!-- ПОДРАЗДЕЛ 2: УСЛОВИЯ ОПЛАТЫ И ПРАВОК -->
+      <div id="payment-terms" class="sub-page-content">
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          
+          <!-- Пункт 1: Оферта -->
+          <div class="terms-card" style="border-left-color: #ff2d55; background: rgba(255, 45, 85, 0.02);">
+            <div class="terms-card-header" style="color: #ff2d55;">⚖️ Автоматическое согласие (Оферта)</div>
+            <div class="terms-card-text">Нажимая кнопку «Подтвердить заказ», артист автоматически и в полном объеме соглашается со всеми правилами технического регламента и условиями оплаты, указанными на данном сайте (ст. 438 ГК РФ).</div>
+          </div>
+
+          <!-- Пункт 2: Демо -->
+          <div class="terms-card">
+            <div class="terms-card-header">🎧 Контрольное демо (Защита материала)</div>
+            <div class="terms-card-text">По окончании работы артисту высылается полностью сведенная и отмастеренная демо-версия трека длительностью <strong>25–30 секунд</strong> в формате MP3 (320 kbps). Длина отрезка может корректироваться в зависимости от общего хронометража композиции.</div>
+          </div>
+
+          <!-- Пункт 3: Финальный расчет -->
+          <div class="terms-card">
+            <div class="terms-card-header">💰 Передача полных версий</div>
+            <div class="terms-card-text">Если артиста полностью устраивает качество демо-версии, производится оплата в соответствии с выбранным тарифом. Строго после получения средств артист получает ссылки на скачивание полных версий трека в максимальном качестве (<strong>WAV 24-bit + MP3 320 kbps</strong>). В случае отказа от оплаты сотрудничество аннулируется, материал остается у звукорежиссера.</div>
+          </div>
+
+          <!-- Пункт 4: Налоги / Чеки -->
+          <div class="terms-card">
+            <div class="terms-card-header">💳 Способ оплаты и отчетность</div>
+            <div class="terms-card-text">Оплата принимается по прямым реквизитам на карту физического лица. Закрывающие документы и электронные чеки (для самозанятых) формируются и предоставляются <strong>индивидуально по предварительному запросу</strong> артиста перед оплатой.</div>
+          </div>
+
+          <!-- Пункт 5: Возвраты и Форс-мажор -->
+          <div class="terms-card">
+            <div class="terms-card-header">🌋 Политика возвратов и Гарантия сроков</div>
+            <div class="terms-card-text">После передачи финального полноразмерного материала (WAV/MP3) уплаченная сумма возврату не подлежит. Однако, в случае форс-мажора со стороны студии (например, задержка сдачи проекта по срокам тарифа), артисту предоставляется <strong>скидка 30%</strong> на текущий заказ, а финальная сумма к оплате уменьшается на этот коэффициент.</div>
+          </div>
+
+          <!-- Пункт 6: Сроки на правки -->
+          <div class="terms-card">
+            <div class="terms-card-header">⏱️ Регламент внесения правок</div>
+            <div class="terms-card-text">Для каждого пакета услуг устанавливается фиксированное время на анализ микса — <strong>3 календарных дня</strong> с момента отправки демо. Этого времени достаточно, чтобы отслушать материал на разных аудиосистемах и составить список корректировок. По истечении 3 дней проект закрывается и отправляется в архив.</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div id="page-videos" class="page-content">
+      <div class="studio-badge" style="width: fit-content; align-self: flex-start;">OUT SOUND SITE / MEDIA</div>
+      <h1>🎬 OUT VIDEOS</h1>
+      <p class="description">Раздел находится в разработке.</p>
+    </div>
+
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО С ТОГЛОМ СОГЛАСИЯ -->
+  <div id="orderModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2>Заказ: <span id="modal-pack-name">ПАК</span></h2>
+      <form id="orderForm" onsubmit="sendOrder(event)">
+        <input type="hidden" id="form-pack">
+        
+        <div class="form-group">
+          <label>Ник артиста / Проект</label>
+          <input type="text" id="form-nickname" class="form-input" placeholder="Например: Скриптонит / OUT SOUND" required>
+        </div>
+
+        <div class="form-group">
+          <label>Ссылка на архив проекта (Drive / Диск)</label>
+          <input type="text" id="form-link" class="form-input" placeholder="https://yandex.ru..." required>
+        </div>
+
+        <div class="form-group">
+          <label>Референс по звуку (Ссылка на трек/диск)</label>
+          <input type="text" id="form-reference" class="form-input" placeholder="Ссылка на YouTube / Музыку / Диск" required>
+        </div>
+
+        <div class="form-group">
+          <label>Контакт для связи (Telegram / VK и др.)</label>
+          <input type="text" id="form-contact" class="form-input" placeholder="@username или ссылка для связи" required>
+        </div>
+
+        <div class="form-group">
+          <label>Пожелания к треку (Необязательно)</label>
+          <input type="text" id="form-comment" class="form-input" placeholder="Например: сделать голос погромче, добавить делей">
+        </div>
+
+        <div style="color: #ff2d55; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18px; line-height: 1.4; border-left: 2px solid #ff2d55; padding-left: 10px;">
+          ⚠️ ВНИМАНИЕ: Если контакт для связи указан неверно или пуст — проект автоматически не берется в работу!
+        </div>
+
+        <!-- ТОГЛ С ВСПЛЫВАЮЩИМ ОКНОМ УСЛОВИЙ -->
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="form-agree" onchange="toggleSubmitButton()">
+            <span class="slider"></span>
+          </label>
+          <span class="toggle-label">
+            Я согласен с <span class="terms-link" onclick="openTermsModal()" style="cursor: pointer;">условиями сотрудничества</span>
+          </span>
+        </div>
+
+
+        <!-- Кнопка по умолчанию отключена (disabled) -->
+        <button type="submit" id="submitOrderBtn" class="submit-btn disabled-btn" disabled>Подтвердить заказ</button>
+      </form>
+    </div>
+  </div>
+  <!-- ВТОРОЕ МОДАЛЬНОЕ ОКНО: ТЕКСТ УСЛОВИЙ -->
+  <div id="termsModal" class="modal-overlay" style="z-index: 3000;"> <!-- z-index 3000, чтобы быть ПОВЕРХ первой модалки -->
+    <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 25px;">
+      <span class="close-modal" onclick="closeTermsModal()">&times;</span>
+      <h2 style="color: #ff2d55; margin-bottom: 20px;">📋 Регламент и условия</h2>
+      
+      <div style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
+        <!-- Технические требования -->
+        <div class="terms-card">
+          <div class="terms-card-header">🔉 Исходники и Формат</div>
+          <div class="terms-card-text">Формат строго <strong>WAV (от 44.1 кГц / 24-bit)</strong>. Все дорожки должны начинаться строго с <strong>0 секунды</strong> (для Time Warp). Динамический запас — минимум <strong>-6 дБ Headroom</strong>.</div>
+        </div>
+        
+        <!-- Демо -->
+        <div class="terms-card">
+          <div class="terms-card-header">🎧 Контрольное демо</div>
+          <div class="terms-card-text">По готовности высылается сведенный отрезок трека (<strong>25–30 секунд</strong>) в формате MP3 (320 kbps) для оценки качества работы.</div>
+        </div>
+
+        <!-- Оплата -->
+        <div class="terms-card">
+          <div class="terms-card-header">💰 Расчет и Передача</div>
+          <div class="terms-card-text">При полном утверждении демо производится оплата. Полные версии (<strong>WAV + MP3</strong>) передаются строго после получения средств. Чеки предоставляются по запросу.</div>
+        </div>
+
+        <!-- Возвраты и Правки -->
+        <div class="terms-card">
+          <div class="terms-card-header">⏱️ Правки и Сроки</div>
+          <div class="terms-card-text">На анализ микса и список правок дается <strong>3 дня</strong>. После передачи полных версий возврат средств невозможен. При форс-мажоре со стороны студии — <strong>скидка 30%</strong>.</div>
+        </div>
+      </div>
+      
+      <button type="button" class="submit-btn" onclick="closeTermsModal()" style="margin-top: 20px;">Понятно, вернуться к заказу</button>
+    </div>
+  </div>
+
+  <script>
+function switchPage(pageId, buttonElement) {
+  // 1. Скрываем все страницы
+  document.querySelectorAll('.page-content').forEach(p => {
+    p.style.display = 'none';
+    p.classList.remove('active-page');
+  });
+  
+  // 2. Снимаем активный класс со всех кнопок меню
+  document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+  
+  // 3. Находим и показываем нужную страницу
+  const targetPage = document.getElementById(pageId);
+  if (targetPage) {
+    targetPage.style.display = 'block'; 
+    targetPage.classList.add('active-page');
+    
+    // 4. Сбрасываем внутренний скролл этой страницы в самый верх
+    targetPage.scrollTop = 0;
+  }
+  
+  // 5. Подсвечиваем нажатую кнопку
+  buttonElement.classList.add('active');
+
+  // 6. Плавно подтягиваем контейнер к верху фрейма Google Sites
+  const container = document.querySelector('.dashboard-container');
+  if (container) {
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+    function openModal(packName, price) {
+      document.getElementById('modal-pack-name').innerText = packName;
+      document.getElementById('form-pack').value = packName;
+      document.getElementById('orderModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('orderModal').classList.remove('open');
+      document.getElementById('orderForm').reset();
+    }
+
+    function sendOrder(event) {
+      event.preventDefault();
+      
+      const isAgreed = document.getElementById('form-agree').checked;
+      if (!isAgreed) {
+        alert("🛑 ДОСТУП ОГРАНИЧЕН: Перед отправкой проекта необходимо согласиться с условиями!");
+        return;
+      }
+      
+      const submitBtn = event.target.querySelector('.submit-btn');
+      const originalText = submitBtn.innerText;
+      submitBtn.innerText = "ОТПРАВКА...";
+      submitBtn.disabled = true;
+
+const orderData = {
+  nickname: document.getElementById('form-nickname').value,
+  link: document.getElementById('form-link').value,
+  reference: document.getElementById('form-reference').value,
+  contact: document.getElementById('form-contact').value,
+  pack: document.getElementById('form-pack').value,
+  comment: document.getElementById('form-comment').value // <-- ДОБАВИЛИ СТРОКУ
+};
+      google.script.run
+        .withSuccessHandler(function(response) {
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+          
+          if (response.success) {
+            closeModal(); // Закрываем форму заказа
+            
+            // Включаем огненный аниме-взрыв
+            const boomContainer = document.getElementById('explosionContainer');
+            boomContainer.classList.add('active-boom');
+            
+            // Даем анимации полностью проиграться 3.5 секунды, затем убираем окно
+            setTimeout(function() {
+              boomContainer.classList.remove('active-boom');
+            }, 3500); 
+            
+          } else { 
+            alert(`Ошибка таблицы: ${response.error}`); 
+          }
+        })
+        .withFailureHandler(function(err) {
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+          alert(`Ошибка сети: ${err.message}`);
+        })
+        .saveOrderToSheet(orderData);
+    }
+
+        function switchSubPage(subPageId, btnElement) {
+      document.querySelectorAll('.sub-page-content').forEach(p => p.classList.remove('active-sub-page'));
+      document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active-sub-tab'));
+      document.getElementById(subPageId).classList.add('active-sub-page');
+      btnElement.classList.add('active-sub-tab');
+    }
+    // Функция активации/деактивации кнопки заказа
+    function toggleSubmitButton() {
+      const checkbox = document.getElementById('form-agree');
+      const submitBtn = document.getElementById('submitOrderBtn');
+      
+      if (checkbox.checked) {
+        submitBtn.removeAttribute('disabled');
+        submitBtn.classList.remove('disabled-btn');
+      } else {
+        submitBtn.setAttribute('disabled', 'true');
+        submitBtn.classList.add('disabled-btn');
+      }
+    }
+
+    // Допишем очистку тогла при закрытии модалки
+    // Найди свою функцию closeModal() и убедись, что она сбрасывает форму, или замени на эту:
+    function closeModal() {
+      document.getElementById('orderModal').classList.remove('open');
+      document.getElementById('orderForm').reset();
+      toggleSubmitButton(); // Сбросит кнопку обратно в заблокированное состояние
+    }
+    // Функции для вложенной модалки условий
+    function openTermsModal() {
+      document.getElementById('termsModal').classList.add('open');
+    }
+
+    function closeTermsModal() {
+      document.getElementById('termsModal').classList.remove('open');
+    }
+    let activeAudioPlayers = [];
+ 
+    function initPlayer(playerEl) {
+      if (playerEl.dataset.initialized) return playerEl;
+      const beforeSrc = playerEl.getAttribute('data-before');
+      const afterSrc = playerEl.getAttribute('data-after');
+      
+      const audioBefore = new Audio(beforeSrc);
+      const audioAfter = new Audio(afterSrc);
+      
+      // ВОТ ЭТИ ДВЕ СТРОКИ ВКЛЮЧАЮТ ЗВУК И СНИМАЮТ ОШИБКУ NaN:
+      audioBefore.crossOrigin = "anonymous";
+      audioAfter.crossOrigin = "anonymous";
+      
+      audioBefore.preload = "auto"; audioAfter.preload = "auto";
+      audioBefore.volume = 0.9; audioAfter.volume = 0.9;
+      audioAfter.muted = true;
+      
+      const playerObj = { element: playerEl, before: audioBefore, after: audioAfter, currentMode: 'before', isPlaying: false };
+      audioBefore.ontimeupdate = function() {
+        const percent = (audioBefore.currentTime / audioBefore.duration) * 100;
+        playerEl.querySelector('.progress-fill').style.width = percent + '%';
+        if (Math.abs(audioBefore.currentTime - audioAfter.currentTime) > 0.1) { audioAfter.currentTime = audioBefore.currentTime; }
+        const currentMin = Math.floor(audioBefore.currentTime / 60);
+        const currentSec = Math.floor(audioBefore.currentTime % 60).toString().padStart(2, '0');
+        const totalMin = Math.floor(audioBefore.duration / 60) || 0;
+        const totalSec = Math.floor(audioBefore.duration % 60).toString().padStart(2, '0') || '00';
+        playerEl.querySelector('.time-display').innerText = `${currentMin}:${currentSec} / ${totalMin}:${totalSec}`;
+      };
+      audioBefore.onended = function() {
+        playerEl.querySelector('.play-btn').innerText = "▶ ПОГНАЛИ";
+        playerEl.querySelector('.play-btn').classList.remove('playing');
+        audioAfter.pause(); playerObj.isPlaying = false;
+      };
+      playerEl.dataset.initialized = "true"; activeAudioPlayers.push(playerObj); return playerObj;
+    }
+
+    function togglePlay(btn) {
+      const playerEl = btn.closest('.ab-player');
+      let p = activeAudioPlayers.find(x => x.element === playerEl) || initPlayer(playerEl);
+      activeAudioPlayers.forEach(x => {
+        if (x !== p && x.isPlaying) {
+          x.before.pause(); x.after.pause(); x.isPlaying = false;
+          x.element.querySelector('.play-btn').innerText = "▶ ПОГНАЛИ";
+          x.element.querySelector('.play-btn').classList.remove('playing');
+        }
+      });
+      if (p.isPlaying) {
+        p.before.pause(); p.after.pause(); btn.innerText = "▶ ПОГНАЛИ"; btn.classList.remove('playing'); p.isPlaying = false;
+      } else {
+        p.after.currentTime = p.before.currentTime; p.before.play(); p.after.play(); btn.innerText = "⏸ ПАУЗА"; btn.classList.add('playing'); p.isPlaying = true;
+      }
+    }
+    function switchAudio(btn, mode) {
+      const playerEl = btn.closest('.ab-player');
+      let p = activeAudioPlayers.find(x => x.element === playerEl) || initPlayer(playerEl);
+      playerEl.querySelectorAll('.ab-toggle').forEach(b => b.classList.remove('active-toggle'));
+      btn.classList.add('active-toggle');
+      p.currentMode = mode;
+      if (mode === 'before') { p.after.muted = true; p.before.muted = false; } 
+      else { p.before.muted = true; p.after.muted = false; p.after.currentTime = p.before.currentTime; }
+    }
+    function seekAudio(event, bar) {
+      const playerEl = bar.closest('.ab-player');
+      let p = activeAudioPlayers.find(x => x.element === playerEl) || initPlayer(playerEl);
+      const rect = bar.getBoundingClientRect();
+      const clickPosition = (event.clientX - rect.left) / rect.width;
+      const targetTime = clickPosition * p.before.duration;
+      p.before.currentTime = targetTime; p.after.currentTime = targetTime;
+    }
+
+  </script>
+  <!-- АНИМЕШНЫЙ ОГНЕННЫЙ ВЗРЫВ -->
+  <div id="explosionContainer" class="explosion-overlay">
+    <div class="anime-explosion">
+      <div class="core-glow"></div>
+      <div class="shockwave"></div>
+      <div class="fire-particle p1"></div>
+      <div class="fire-particle p2"></div>
+      <div class="fire-particle p3"></div>
+      <div class="fire-particle p4"></div>
+      <div class="fire-particle p5"></div>
+      <div class="fire-particle p6"></div>
+      <div class="explosion-text">ЗАКАЗ ПРИНЯТ! 🔥</div>
+    </div>
+  </div>
+
+</body>
+</html>

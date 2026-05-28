@@ -539,6 +539,17 @@ body {
 .social-link:hover {
   transform: translateY(-2px);
 }
+    .sub-tabs-container {
+  display: flex !important;
+  gap: 10px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 15px;
+  
+  /* 🔥 ЖЕЛЕЗНОЕ ВЫРАВНИВАНИЕ НА ПК */
+  max-width: 800px;         /* Ровно по ширине карточек условий */
+  margin: 25px auto !important; /* Центрирует строку и возвращает шикарный отступ сверху (25px) */
+  width: 100%;
+}
 /* ==========================================
    НОВАЯ СТРАТЕГИЯ МОБИЛЬНОЙ ОПТИМИЗАЦИИ
    ========================================== */
@@ -863,8 +874,7 @@ body {
       <!-- Подменю для разделения страницы на 2 части -->
       <!-- Подменю для разделения страницы на 2 части -->
 <!-- Контейнер-обертка для центрирования кнопок на ПК -->
-<div style="max-width: 800px; margin: 0 auto 25px auto; border-bottom: 1px solid #222; padding-bottom: 15px; width: 100%;">
-  <div style="display: flex; gap: 10px; justify-content: flex-start;">
+<div class="sub-tabs-container">
         <button type="button" class="sub-tab-btn active-sub-tab" onclick="switchSubPage('tech-reqs', this)">❗️ Условия проекта</button>
         <button type="button" class="sub-tab-btn" onclick="switchSubPage('payment-terms', this)">💳 Условия оплаты</button>
       </div>

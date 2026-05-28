@@ -1051,35 +1051,27 @@ function sendOrder(event) {
     comment: document.getElementById('form-comment').value
   };
 
-  // Отправляем данные на наш новый бэкенд через fetch
+  // А отсюда пошел новый fetch, который ты вставляешь вместо старого:
   fetch(scriptUrl, {
     method: 'POST',
-    mode: 'cors',
+    mode: 'no-cors', 
     headers: {
-      'Content-Type': 'text/plain' // Используем text/plain, чтобы избежать лишних проверок браузера
+      'Content-Type': 'text/plain'
     },
     body: JSON.stringify(orderData)
   })
-  .then(response => response.json())
-  .then(response => {
+  .then(() => {
     submitBtn.innerText = originalText;
     submitBtn.disabled = false;
     
-    if (response.success) {
-      closeModal(); // Закрываем форму заказа
-      
-      // Включаем твой огненный аниме-взрыв
-      const boomContainer = document.getElementById('explosionContainer');
-      boomContainer.classList.add('active-boom');
-      
-      // Даем анимации полностью проиграться 3.5 секунды, затем убираем окно
-      setTimeout(function() {
-        boomContainer.classList.remove('active-boom');
-      }, 3500); 
-      
-    } else { 
-      alert(`Ошибка бэкенда: ${response.error}`); 
-    }
+    closeModal(); 
+    
+    const boomContainer = document.getElementById('explosionContainer');
+    boomContainer.classList.add('active-boom');
+    
+    setTimeout(function() {
+      boomContainer.classList.remove('active-boom');
+    }, 3500); 
   })
   .catch(err => {
     submitBtn.innerText = originalText;

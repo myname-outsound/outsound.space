@@ -5,7 +5,7 @@
   <base target="_top">
   <style>
 body {
-  background-color: transparent;
+  background-color: #0d0d0d; /* Изменили на черный */
   color: #e0e0e0;
   font-family: 'Segoe UI', Roboto, sans-serif;
   margin: 0;
@@ -1025,56 +1025,68 @@ function switchPage(pageId, buttonElement) {
       document.getElementById('orderForm').reset();
     }
 
-    function sendOrder(event) {
-      event.preventDefault();
-      
-      const isAgreed = document.getElementById('form-agree').checked;
-      if (!isAgreed) {
-        alert("🛑 ДОСТУП ОГРАНИЧЕН: Перед отправкой проекта необходимо согласиться с условиями!");
-        return;
-      }
-      
-      const submitBtn = event.target.querySelector('.submit-btn');
-      const originalText = submitBtn.innerText;
-      submitBtn.innerText = "ОТПРАВКА...";
-      submitBtn.disabled = true;
+function sendOrder(event) {
+  event.preventDefault();
+  
+  const isAgreed = document.getElementById('form-agree').checked;
+  if (!isAgreed) {
+    alert("🛑 ДОСТУП ОГРАНИЧЕН: Перед отправкой проекта необходимо согласиться с условиями!");
+    return;
+  }
+  
+  const submitBtn = event.target.querySelector('.submit-btn');
+  const originalText = submitBtn.innerText;
+  submitBtn.innerText = "ОТПРАВКА...";
+  submitBtn.disabled = true;
 
-const orderData = {
-  nickname: document.getElementById('form-nickname').value,
-  link: document.getElementById('form-link').value,
-  reference: document.getElementById('form-reference').value,
-  contact: document.getElementById('form-contact').value,
-  pack: document.getElementById('form-pack').value,
-  comment: document.getElementById('form-comment').value // <-- ДОБАВИЛИ СТРОКУ
-};
-      google.script.run
-        .withSuccessHandler(function(response) {
-          submitBtn.innerText = originalText;
-          submitBtn.disabled = false;
-          
-          if (response.success) {
-            closeModal(); // Закрываем форму заказа
-            
-            // Включаем огненный аниме-взрыв
-            const boomContainer = document.getElementById('explosionContainer');
-            boomContainer.classList.add('active-boom');
-            
-            // Даем анимации полностью проиграться 3.5 секунды, затем убираем окно
-            setTimeout(function() {
-              boomContainer.classList.remove('active-boom');
-            }, 3500); 
-            
-          } else { 
-            alert(`Ошибка таблицы: ${response.error}`); 
-          }
-        })
-        .withFailureHandler(function(err) {
-          submitBtn.innerText = originalText;
-          submitBtn.disabled = false;
-          alert(`Ошибка сети: ${err.message}`);
-        })
-        .saveOrderToSheet(orderData);
+  // Ссылка из Google Apps Script //
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbybYSy1Bmc6sAHw0GMD1MjT1AZsczlg_nzKX0Nww4KyAGGxPNwiZ2ghUsATLHAb8LLTyQ/exec"; 
+
+  const orderData = {
+    nickname: document.getElementById('form-nickname').value,
+    link: document.getElementById('form-link').value,
+    reference: document.getElementById('form-reference').value,
+    contact: document.getElementById('form-contact').value,
+    pack: document.getElementById('form-pack').value,
+    comment: document.getElementById('form-comment').value
+  };
+
+  // Отправляем данные на наш новый бэкенд через fetch
+  fetch(scriptUrl, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'text/plain' // Используем text/plain, чтобы избежать лишних проверок браузера
+    },
+    body: JSON.stringify(orderData)
+  })
+  .then(response => response.json())
+  .then(response => {
+    submitBtn.innerText = originalText;
+    submitBtn.disabled = false;
+    
+    if (response.success) {
+      closeModal(); // Закрываем форму заказа
+      
+      // Включаем твой огненный аниме-взрыв
+      const boomContainer = document.getElementById('explosionContainer');
+      boomContainer.classList.add('active-boom');
+      
+      // Даем анимации полностью проиграться 3.5 секунды, затем убираем окно
+      setTimeout(function() {
+        boomContainer.classList.remove('active-boom');
+      }, 3500); 
+      
+    } else { 
+      alert(`Ошибка бэкенда: ${response.error}`); 
     }
+  })
+  .catch(err => {
+    submitBtn.innerText = originalText;
+    submitBtn.disabled = false;
+    alert(`Ошибка сети: ${err.message}`);
+  });
+}
 
         function switchSubPage(subPageId, btnElement) {
       document.querySelectorAll('.sub-page-content').forEach(p => p.classList.remove('active-sub-page'));

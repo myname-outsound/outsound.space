@@ -39,8 +39,12 @@ body {
   padding: 0;
   display: flex;
   justify-content: center; 
-  align-items: center;  /* 🌟 Изменили flex-start на center, чтобы сжатый сайт стоял ровно по центру экрана */
-  height: 100vh !important; /* Растягиваем на всю высоту окна браузера */
+  
+  /* 🔥 ЖЕСТКАЯ ПРИВЯЗКА К ТОП-ЛИНИИ: Сайт больше никогда не прыгнет по вертикали */
+  align-items: flex-start;  
+  padding-top: 3vh; /* Делает красивый, фиксированный отступ всей коробки от верха монитора */
+  
+  height: 100vh !important; 
   width: 100vw;            
   overflow: hidden; 
 }

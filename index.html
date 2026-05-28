@@ -51,22 +51,27 @@ body {
       text-transform: uppercase;
     }
 
-    h1 {
-      color: #ffffff;
-      font-size: 32px;
-      font-weight: 900;
-      margin-top: 0;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+      h1 {
+        color: #ffffff;
+        /* Плавный размер: минимум 24px, оптимум 2vw + 12px, максимум 36px */
+        font-size: clamp(24px, 2vw + 12px, 36px); 
+        font-weight: 900;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
 
-    .description {
-      color: #b3b3b3;
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
+      .description {
+        color: #b3b3b3;
+        /* Плавный размер текста: от 14px до 16px */
+        font-size: clamp(14px, 0.5vw + 12px, 16px);
+        line-height: 1.6;
+        margin-bottom: 20px;
+        max-width: 800px; /* Ограничиваем ширину описания */
+        margin-left: auto;
+        margin-right: auto;
+      }
 
     .setup-list {
       background: #151515;
@@ -290,14 +295,18 @@ body {
     }
 
     /* Карточки условий */
-    .terms-card {
-      background: #141414;
-      border-left: 3px solid #333;
-      padding: 15px 20px;
-      border-radius: 0 8px 8px 0;
-      border: 1px solid #222;
-      border-left: 3px solid #ff2d55;
-    }
+      .terms-card {
+        background: #141414;
+        padding: 18px 24px; /* Чуть увеличим паддинги на ПК для солидности */
+        border-radius: 0 8px 8px 0;
+        border: 1px solid #222;
+        border-left: 3px solid #ff2d55;
+        
+        /* 🔥 ИСПРАВЛЕНИЕ ДЛЯ БОЛЬШИХ МОНИТОРОВ */
+        max-width: 800px;     /* Текст больше не растянется "в колбасу" */
+        margin: 0 auto 15px auto; /* Центрирует карточки на широком экране */
+        box-sizing: border-box;
+      }
     .terms-card-header {
       font-size: 14px;
       font-weight: 800;
@@ -446,11 +455,15 @@ body {
     @keyframes particleFly5 { 0% { transform: translate(0,0) scale(1.5); opacity: 1; } 100% { transform: translate(-40px, -250px) scale(0); opacity: 0; } }
     @keyframes particleFly6 { 0% { transform: translate(0,0) scale(2); opacity: 1; } 100% { transform: translate(140px, 190px) scale(0); opacity: 0; } }
     /* СТИЛИ ИНТЕРАКТИВНОГО ПЛЕЕРА */
-    .case-card {
-      background: #141414; border: 1px solid #222; border-radius: 12px; padding: 25px;
-      display: flex; flex-direction: column; gap: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-      text-align: left;
-    }
+      .case-card {
+        background: #141414; border: 1px solid #222; border-radius: 12px; padding: 25px;
+        display: flex; flex-direction: column; gap: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        text-align: left;
+        
+        /* 🔥 ИСПРАВЛЕНИЕ ДЛЯ БОЛЬШИХ МОНИТОРОВ */
+        max-width: 800px;
+        margin: 0 auto;
+      }
     .case-title { font-size: 16px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
     .case-desc { font-size: 13px; color: #888; line-height: 1.5; }
     .case-desc strong { color: #ff2d55; }
@@ -841,7 +854,7 @@ body {
       <h1>📋 Условия сотрудничества</h1>
       
       <!-- Подменю для разделения страницы на 2 части -->
-      <div style="display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid #222; padding-bottom: 15px;">
+      <div style="display: flex; gap: 10px; margin: 0 auto 25px auto; border-bottom: 1px solid #222; padding-bottom: 15px; max-width: 800px;">
         <button type="button" class="sub-tab-btn active-sub-tab" onclick="switchSubPage('tech-reqs', this)">❗️ Условия проекта</button>
         <button type="button" class="sub-tab-btn" onclick="switchSubPage('payment-terms', this)">💳 Условия оплаты</button>
       </div>

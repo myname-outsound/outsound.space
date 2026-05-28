@@ -526,10 +526,10 @@ body {
   
   /* Блокируем системный скролл браузера */
   html, body {
-    height: 100vh !important;
-    max-height: 100vh !important;
-    overflow: hidden !important;
-    background-color: #0d0d0d !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto !important; /* Включаем обычный скролл для всей страницы */
+    background-color: #050505 !important; /* Делаем подложку за контейнером очень темной */
   }
 
   /* 🔥 ГЛАВНОЕ ИСПРАВЛЕНИЕ: Контейнер теперь занимает ВЕСЬ экран смартфона */

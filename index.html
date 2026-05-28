@@ -46,23 +46,23 @@ body {
 }
 
 .dashboard-container {
-  /* 🔥 ИЗМЕНЯЕМ ПРОПОРЦИИ: сужаем по ширине и вытягиваем в высоту */
-  width: 75% !important;         /* Было 95% — поджали коробку по бокам */
-  max-width: 1050px !important;  /* Было 1400px — жестко ограничили максимальную ширину */
-  height: auto !important;     /* 🌟 Коробка теперь автоматически сжимается под контент страницы! */
-  max-height: 94vh !important; /* На длинных страницах (тарифы) коробка зафиксируется на этот максимум */
-  
-  /* Все остальные свойства оставляем в идеальном состоянии */
+  width: 85% !important;         
+  max-width: 1100px !important;  
+  height: auto !important;       /* Оставляем авто-высоту под контент */
+  max-height: 94vh !important;   
   background: rgba(13, 13, 13, 0.93) !important; 
   border: 1px solid #222;
   border-radius: 16px;
-  padding: 25px 35px 35px 35px !important; 
-  box-sizing: border-box;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
   position: relative;
   overflow: hidden !important; 
   display: flex !important;         
   flex-direction: column !important; 
+
+  /* 🔥 ГЛАВНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ПРИВЯЗКИ МЕНЮ К ВЕРХУ */
+  justify-content: flex-start !important; /* Намертво прижимает меню навигации к верхнему краю */
+  padding: 0 35px 35px 35px !important;   /* Сделали верхний паддинг 0, чтобы меню прилипло к шапке */
+  box-sizing: border-box;
 }
 
     .studio-badge {

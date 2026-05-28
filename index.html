@@ -682,7 +682,6 @@ body {
   }
   .rates-grid::-webkit-scrollbar { height: 4px !important; }
   .rates-grid::-webkit-scrollbar-thumb { background: #ff2d55 !important; border-radius: 10px !important; }
-
   /* Карточки подгоняются под ширину экрана смартфона, чтобы контент внутри не сжимался */
   .rate-card {
     flex: 0 0 85vw !important; /* Карточка занимает 85% ширины экрана телефона */
@@ -705,24 +704,23 @@ body {
   .modal-content h2 { font-size: 20px !important; }
   .form-group label { font-size: 13px !important; }
   .form-input { padding: 12px !important; font-size: 15px !important; }
-}
-      .sub-tabs-container {
+
+  /* 🌟 ПЕРЕНЕСЛИ КЛАСС СЮДА, ЧТОБЫ ОН РАБОТАЛ НА ТЕЛЕФОНАХ */
+  .sub-tabs-container {
     max-width: 100% !important;
     margin: 15px 0 !important; /* Убираем центрирование ПК на мобилке */
     flex-wrap: wrap !important; /* Разрешаем кнопкам переноситься, если экран слишком узкий */
   }
+} /* 🌟 ВОТ ТЕПЕРЬ МЕДИА-ЗАПРОС ЗАКРЫТ ПРАВИЛЬНО И ЗДЕСЬ! */
 
   </style>
 </head>
 <body>
     <!-- АНИМАЦИОННЫЙ ЗАДНИЙ ФОН С САМУРАЯМИ -->
   <div class="bg-animation-overlay">
-    <!-- Сюда вставляем ссылку на черно-белую GIF-анимацию. Можешь заменить URL на свой! -->
     <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXp0ZzVoMW44MDRpYmdxamgxaW1uOXEzcjVodHpmdjlldWwwdGlzYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PJvvewo5mTtXW/giphy.gif" alt="Samurai Background">
   </div>
-
-  <div class="dashboard-container">
-  <div class="dashboard-container">
+<div class="dashboard-container">
     
     <!-- МЕНЮ НАВИГАЦИИ (ПЕРЕНЕСЕНО НАВЕРХ И ЗАКРЕПЛЕНО) -->
     <div class="button-grid">
@@ -744,17 +742,18 @@ body {
       </p>
       <div class="setup-list">
         <p>Контроль на честном сетапе: мониторы <strong>Yamaha HS5</strong>, наушники <strong>DT 990 Pro</strong>, <strong>ATH-M50x</strong>, интерфейс <strong>MiniFuse</strong>.</p>
-</div>
-        <!-- БЛОК СОЦ. СЕТЕЙ -->
-<div class="social-block">
-  <span class="social-title">Соцсети:</span>
-  
-  <!-- Ссылка на Telegram -->
-  <a href="https://t.me/NoflowshQa" target="_blank" class="social-link tg-link" title="Telegram">
-    <svg viewBox="0 0 24 24">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.48 2.75-2.7.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-2.04 1.29-5.77 3.81-.55.38-1.05.56-1.5.55-.5-.01-1.46-.28-2.17-.51-.86-.28-1.54-.43-1.48-.91.03-.25.38-.51 1.05-.78 4.12-1.79 6.86-2.97 8.23-3.53 3.92-1.61 4.73-1.89 5.26-1.9.12 0 .38.03.55.17.14.12.18.28.2.42-.02.08-.02.21-.03.38z"/>
-    </svg>
-  </a>
+      </div>
+      
+      <!-- БЛОК СОЦ. СЕТЕЙ -->
+      <div class="social-block">
+        <span class="social-title">Соцсети:</span>
+        
+        <!-- Ссылка на Telegram -->
+        <a href="https://t.me/NoflowshQa" target="_blank" class="social-link tg-link" title="Telegram">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.48 2.75-2.7.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-2.04 1.29-5.77 3.81-.55.38-1.05.56-1.5.55-.5-.01-1.46-.28-2.17-.51-.86-.28-1.54-.43-1.48-.91.03-.25.38-.51 1.05-.78 4.12-1.79 6.86-2.97 8.23-3.53 3.92-1.61 4.73-1.89 5.26-1.9.12 0 .38.03.55.17.14.12.18.28.2.42-.02.08-.02.21-.03.38z"/>
+          </svg>
+        </a>
 
   <!-- Ссылка на VK -->
   <a href="https://vk.com/outsound_mix" target="_blank" class="social-link vk-link" title="ВКонтакте">

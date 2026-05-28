@@ -580,6 +580,17 @@ body {
   margin: 25px 0 25px 0 !important; 
   width: 100% !important;
 }
+    /* МЯГКОЕ ПОЯВЛЕНИЕ СТРАНИЦ */
+.page-content {
+  /* Задаем базовую прозрачность для анимации */
+  opacity: 0;
+  transition: opacity 0.22s ease-in-out !important;
+}
+
+/* Когда страница становится активной, она плавно проявляется */
+.page-content.active-page {
+  opacity: 1 !important;
+}
 /* ==========================================
    НОВАЯ СТРАТЕГИЯ МОБИЛЬНОЙ ОПТИМИЗАЦИИ
    ========================================== */
@@ -1101,29 +1112,36 @@ body {
 
   <script>
 function switchPage(pageId, buttonElement) {
-  // 1. Скрываем все страницы
+  // 1. Скрываем все страницы (убираем активный класс плавности и сбрасываем дисплей)
   document.querySelectorAll('.page-content').forEach(p => {
-    p.style.display = 'none';
     p.classList.remove('active-page');
+    p.style.display = 'none';
   });
   
   // 2. Снимаем активный класс со всех кнопок меню
   document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
   
-  // 3. Находим и показываем нужную страницу
+  // 3. Находим нужную страницу
   const targetPage = document.getElementById(pageId);
   if (targetPage) {
     targetPage.style.display = 'block'; 
-    targetPage.classList.add('active-page');
+    
+    // Делаем микро-задержку в 10 миллисекунд, чтобы браузер успел включить display: block,
+    // и анимация opacity сработала идеально мягко
+    setTimeout(() => {
+      targetPage.classList.add('active-page');
+    }, 10);
     
     // 4. Сбрасываем внутренний скролл этой страницы в самый верх
     targetPage.scrollTop = 0;
   }
   
-  // 5. Подсвечиваем нажатую кнопку
-  buttonElement.classList.add('active');
+  // 5. Подсвечиваем нажатую кнопку меню
+  if (buttonElement && buttonElement.classList) {
+    buttonElement.classList.add('active');
+  }
 
-  // 6. Плавно подтягиваем контейнер к верху фрейма Google Sites
+  // 6. Плавно подтягиваем контейнер к верху фрейма, если это необходимо
   const container = document.querySelector('.dashboard-container');
   if (container) {
     container.scrollIntoView({ behavior: 'smooth', block: 'start' });

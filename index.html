@@ -19,9 +19,9 @@
 .bg-animation-overlay img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Гифка заполнит экран без искажения пропорций */
+  object-fit: cover; /* Гифка заполнит экран */
   
-  /* 🔥 МАГИЯ СТИЛЯ: Переводим в ЧБ и делаем полупрозрачной */
+  /* Переводим в ЧБ и делаем полупрозрачной */
   filter: grayscale(100%) contrast(120%) brightness(30%); 
   opacity: 0.25; /* Прозрачность 25%, чтобы не мозолила глаза и не мешала читать */
   
@@ -40,7 +40,7 @@ body {
   display: flex;
   justify-content: center; 
   
-  /* 🔥 ЖЕСТКАЯ ПРИВЯЗКА К ТОП-ЛИНИИ: Сайт больше никогда не прыгнет по вертикали */
+  /* 🔥 ЖЕСТКАЯ ПРИВЯЗКА К ТОП-ЛИНИИ */
   align-items: flex-start;  
   padding-top: 35px !important;
   
@@ -53,12 +53,12 @@ body {
   width: 85% !important;         
   max-width: 1100px !important;  
   
-  /* 🔥 ЖЕСТКИЙ ОТСТУП: Теперь он физически расталкивает экран и никогда не исчезнет */
+  /* ЖЕСТКИЙ ОТСТУП */
   margin-top: 35px !important; 
   
   height: auto !important;       /* Сжимается под мелкий контент */
   
-  /* 🔥 НОВЫЙ ПОТОЛОК: Уменьшили до 88vh, чтобы сайт + отступ идеально влезали в 100% экрана ПК */
+  /* НОВЫЙ ПОТОЛОК: Уменьшили до 88vh */
   max-height: 88vh !important;   
   
   background: rgba(13, 13, 13, 0.93) !important; 
@@ -123,8 +123,8 @@ body {
       gap: 20px;
       flex-wrap: wrap;
       margin-top: 20px;
-      flex-shrink: 0; /* Запрещаем сетке сжиматься или ломать высоту */
-      padding-bottom: 30px; /* Запас снизу, чтобы кнопки "Заказать" не липли к краю */
+      flex-shrink: 0; 
+      padding-bottom: 30px; 
     }
 
     .rate-card {
@@ -232,8 +232,8 @@ body {
   border-bottom: 1px solid #222;
   flex-shrink: 0 !important; 
 
-  /* 🌟 ДОБАВЛЯЕМ ОТСТУП СВЕРХУ ДЛЯ КНОПОК */
-  padding: 20px 0 15px 0 !important; /* 20px сверху дадут кнопкам воздух от верхней рамки */
+  /* ОТСТУП СВЕРХУ ДЛЯ КНОПОК */
+  padding: 20px 0 15px 0 !important; /* 20px сверху */
   margin-bottom: 20px !important; 
 }
 
@@ -249,38 +249,38 @@ body {
   display: none; 
   width: 100%;
   margin-top: 0 !important; 
-  /* ИСПРАВЛЕНИЕ: Заставляем контент забирать всю оставшуюся высоту под меню */
+  /* Заставляем контент забирать всю оставшуюся высоту под меню */
   flex-grow: 1 !important; 
   height: calc(100% - 60px) !important;
   max-height: calc(100% - 60px) !important; 
-  overflow-y: auto !important; /* Розовый скроллбар крутит только эту часть */
+  overflow-y: auto !important; 
   padding-right: 8px;
   box-sizing: border-box;
 }
 
    /* Настройки кастомного розового скроллбара */
     .page-content::-webkit-scrollbar { 
-      width: 6px !important; /* Делаем полосу тонкой и аккуратной */
+      width: 6px !important; 
       display: block !important;
     }
     .page-content::-webkit-scrollbar-track { 
-      background: #111111 !important; /* Черная дорожка, чтобы не выделялась на фоне */
+      background: #111111 !important; 
       border-radius: 10px;
     }
     .page-content::-webkit-scrollbar-thumb { 
-      background: #ff2d55 !important; /* Наш фирменный ярко-розовый цвет */
+      background: #ff2d55 !important; 
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(255, 45, 85, 0.5); /* Неоновый отсвет */
     }
     .page-content::-webkit-scrollbar-thumb:hover { 
-      background: #e02447 !important; /* Чуть темнее при наведении курсора */
+      background: #e02447 !important; 
     }
 
     /* МОДАЛЬНОЕ ОКНО ЗАКАЗА */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.85); display: flex; justify-content: center;
-      align-items: center; z-index: 100000; /* Перекрывает меню со значением 9999 */
+      align-items: center; z-index: 100000; 
       opacity: 0; pointer-events: none; transition: all 0.3s;
     }
     .modal-overlay.open { opacity: 1; pointer-events: auto; }
@@ -326,15 +326,15 @@ body {
     }
 
     /* Карточки условий */
-.terms-card {
-  background: #141414;
-  padding: 15px 20px;
-  border-radius: 0 8px 8px 0;
-  border: 1px solid #222;
-  border-left: 3px solid #ff2d55;
-  transition: all 0.3s ease;
-  margin-bottom: 15px; 
-}
+    .terms-card {
+      background: #141414;
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      border: 1px solid #222;
+      border-left: 3px solid #ff2d55;
+      transition: all 0.3s ease;
+      margin-bottom: 15px; 
+    }
     .terms-card-header {
       font-size: 14px;
       font-weight: 800;
@@ -415,13 +415,13 @@ body {
       box-shadow: none !important;
       border: 1px solid #333;
     }
-    /* ОГНЕННЫЙ АНИМЕ-ВЗРЫВ (ИСПРАВЛЕННЫЙ) */
+    /* ОГНЕННЫЙ АНИМЕ-ВЗРЫВ */
     .explosion-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(10, 10, 10, 0.95); 
-      display: none; /* Изначально полностью выключаем из дерева документа */
+      display: none; 
       justify-content: center; align-items: center; 
-      z-index: 9999; /* Поверх абсолютно всего */
+      z-index: 9999; 
     }
     /* При активации принудительно включаем flex-отображение */
     .explosion-overlay.active-boom { display: flex !important; }
@@ -495,7 +495,6 @@ body {
       text-align: left;
       transition: all 0.3s ease;
     
-      /* 🔥 ЖЕСТКОЕ СЖАТИЕ ПОД ТВОИ ГРАНИЦЫ НА ПК */
       max-width: 900px !important;  /* Плееры больше не будут растягиваться на весь экран */
       margin: 0 auto 20px auto !important; /* Центрирует карточки плееров на широком мониторе */
     }
@@ -519,16 +518,16 @@ body {
     .progress-bar-container { width: 100%; height: 6px; background: #222; border-radius: 3px; cursor: pointer; margin-bottom: 8px; position: relative; }
     .progress-fill { height: 100%; width: 0%; background: #ff2d55; border-radius: 3px; box-shadow: 0 0 8px #ff2d55; transition: width 0.1s linear; }
     .time-display { font-size: 11px; color: #555; font-family: monospace; text-align: right; }
+    
 /* СТИЛИ ДЛЯ БЛОКА СОЦ. СЕТЕЙ */
-/* ОБНОВЛЕННЫЙ ЦЕНТРИРОВАННЫЙ БЛОК СОЦСЕТЕЙ */
 .social-block {
   display: flex;
   align-items: center;
-  justify-content: center; /* Центрирует элементы внутри блока */
+  justify-content: center; 
   gap: 15px;
-  margin: 25px auto 0 auto; /* Первая цифра 25px — отступ сверху от сетапа. auto — центрирует сам блок */
+  margin: 25px auto 0 auto;
   padding: 5px 0;
-  width: fit-content; /* Заставляет блок сжиматься до размеров контента для точного центрирования */
+  width: fit-content;
 }
 
 .social-title {
@@ -556,13 +555,13 @@ body {
   transition: fill 0.3s ease, filter 0.3s ease;
 }
 
-/* Ховер-эффект для Telegram (Фирменный голубой неон) */
+/* Ховер-эффект для Telegram */
 .social-link.tg-link:hover svg {
   fill: #0088cc;
   filter: drop-shadow(0 0 8px rgba(0, 136, 204, 0.6));
 }
 
-/* Ховер-эффект для VK (Фирменный синий неон) */
+/* Ховер-эффект для VK */
 .social-link.vk-link:hover svg {
   fill: #0077ff;
   filter: drop-shadow(0 0 8px rgba(0, 119, 255, 0.6));
@@ -592,7 +591,7 @@ body {
   opacity: 1 !important;
 }
 /* ==========================================
-   НОВАЯ СТРАТЕГИЯ МОБИЛЬНОЙ ОПТИМИЗАЦИИ
+   МОБИЛЬНАЯ ОПТИМИЗАЦИИЯ
    ========================================== */
 @media screen and (max-width: 768px) {
   
@@ -600,27 +599,27 @@ body {
   html, body {
     height: auto !important;
     max-height: none !important;
-    overflow-y: auto !important; /* Включаем обычный скролл для всей страницы */
-    background-color: #050505 !important; /* Делаем подложку за контейнером очень темной */
+    overflow-y: auto !important; 
+    background-color: #050505 !important; 
   }
 
-  /* 🔥 ГЛАВНОЕ ИСПРАВЛЕНИЕ: Контейнер теперь занимает ВЕСЬ экран смартфона */
+  /* Контейнер теперь занимает ВЕСЬ экран смартфона */
   .dashboard-container {
-    width: 95% !important; /* Возвращаем аккуратные отступы по бокам */
+    width: 95% !important; 
     max-width: 1400px !important;       
-    height: auto !important; /* 🌟 Высота теперь подстраивается автоматически! */
-    max-height: none !important; /* Убираем жесткий потолок */
+    height: auto !important; 
+    max-height: none !important; 
     min-height: auto !important;
     
     background: rgba(13, 13, 13, 0.95) !important;
-    border: 1px solid #222 !important; /* Возвращаем красивую рамку */
-    border-radius: 16px !important; /* И скругления углов */
+    border: 1px solid #222 !important; 
+    border-radius: 16px !important; 
     padding: 24px 20px !important; 
     box-sizing: border-box !important;
-    overflow: visible !important; /* Чтобы внутренние элементы не обрезались */
+    overflow: visible !important; 
     display: flex !important;         
     flex-direction: column !important; 
-    margin: 15px auto !important; /* Центрируем сам контейнер на экране */
+    margin: 15px auto !important; 
   }
 
   /* Меню навигации: удобная горизонтальная лента для пальца */
@@ -638,13 +637,13 @@ body {
   .button-grid::-webkit-scrollbar { display: none !important; }
 
   .nav-button {
-    padding: 12px 18px !important; /* Делаем кнопки крупнее, чтобы удобно тапать */
+    padding: 12px 18px !important; 
     font-size: 13px !important;   
     min-width: max-content !important; 
     flex-shrink: 0 !important;
   }
 
-  /* 🔥 РАЗМЕРЫ ТЕКСТА: Возвращаем нормальный крупный читаемый масштаб */
+  /* РАЗМЕРЫ ТЕКСТА: Возвращаем нормальный крупный читаемый масштаб */
   h1 { 
     font-size: 26px !important; 
     line-height: 1.2 !important; 
@@ -653,7 +652,7 @@ body {
   }
   
   .description { 
-    font-size: 15px !important; /* Текст стал крупнее и читаемее */
+    font-size: 15px !important; 
     line-height: 1.6 !important; 
     margin-bottom: 25px !important; 
   }
@@ -676,16 +675,16 @@ body {
     font-size: 15px !important;
   }
   .social-link {
-    width: 38px !important; /* Иконки стали больше */
+    width: 38px !important; 
     height: 38px !important;
   }
 
   .page-content {
     display: none;
     width: 100% !important;
-    height: auto !important; /* Убираем calc() ограничения */
+    height: auto !important; 
     max-height: none !important; 
-    overflow-y: visible !important; /* Выключаем внутренний розовый скролл для главной/тарифов */
+    overflow-y: visible !important; 
     padding-right: 0 !important;
   }
   
@@ -693,7 +692,7 @@ body {
     display: block !important;
   }
 
-  /* 🔥 Карусель тарифов: идеально под размер экрана */
+  /* Карусель тарифов: идеально под размер экрана */
   .rates-grid {
     display: flex !important;
     flex-direction: row !important; 
@@ -707,7 +706,7 @@ body {
   .rates-grid::-webkit-scrollbar-thumb { background: #ff2d55 !important; border-radius: 10px !important; }
   /* Карточки подгоняются под ширину экрана смартфона, чтобы контент внутри не сжимался */
   .rate-card {
-    flex: 0 0 85vw !important; /* Карточка занимает 85% ширины экрана телефона */
+    flex: 0 0 85vw !important; 
     min-width: 290px !important;
     max-width: 340px !important;
   }

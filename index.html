@@ -1066,8 +1066,6 @@ body {
             Я согласен с <span class="terms-link" onclick="closeModal(); switchPage('page-mastering', document.querySelectorAll('.nav-button')[3]);" style="cursor: pointer;">условиями сотрудничества</span>
           </span>
         </div>
-
-
         <!-- Кнопка по умолчанию отключена (disabled) -->
         <button type="submit" id="submitOrderBtn" class="submit-btn disabled-btn" disabled>Подтвердить заказ</button>
       </form>
@@ -1075,6 +1073,7 @@ body {
   </div>
  
   <script>
+    
 function switchPage(pageId, buttonElement) {
   // 1. Скрываем все страницы (убираем активный класс плавности и сбрасываем дисплей)
   document.querySelectorAll('.page-content').forEach(p => {
@@ -1090,8 +1089,7 @@ function switchPage(pageId, buttonElement) {
   if (targetPage) {
     targetPage.style.display = 'block'; 
     
-    // Делаем микро-задержку в 10 миллисекунд, чтобы браузер успел включить display: block,
-    // и анимация opacity сработала идеально мягко
+    // Делаем микро-задержку в 10 миллисекунд ЧТОБЫ анимация opacity сработала идеально мягко
     setTimeout(() => {
       targetPage.classList.add('active-page');
     }, 10);
@@ -1136,7 +1134,7 @@ function sendOrder(event) {
   submitBtn.innerText = "ОТПРАВКА...";
   submitBtn.disabled = true;
 
-  // Ссылка из Google Apps Script //
+  // Ссылка НА Apps Script //
   const scriptUrl = "https://script.google.com/macros/s/AKfycbybYSy1Bmc6sAHw0GMD1MjT1AZsczlg_nzKX0Nww4KyAGGxPNwiZ2ghUsATLHAb8LLTyQ/exec"; 
 
   const orderData = {
@@ -1148,7 +1146,7 @@ function sendOrder(event) {
     comment: document.getElementById('form-comment').value
   };
 
-  // А отсюда пошел новый fetch, который ты вставляешь вместо старого:
+  // ТУТ новый fetch
   fetch(scriptUrl, {
     method: 'POST',
     mode: 'no-cors', 
@@ -1198,11 +1196,10 @@ function sendOrder(event) {
     }
 
     // Допишем очистку тогла при закрытии модалки
-    // Найди свою функцию closeModal() и убедись, что она сбрасывает форму, или замени на эту:
     function closeModal() {
       document.getElementById('orderModal').classList.remove('open');
       document.getElementById('orderForm').reset();
-      toggleSubmitButton(); // Сбросит кнопку обратно в заблокированное состояние
+      toggleSubmitButton(); 
     }
     // Функции для вложенной модалки условий
     function openTermsModal() {
@@ -1237,7 +1234,7 @@ function sendOrder(event) {
       const audioBefore = new Audio(beforeSrc);
       const audioAfter = new Audio(afterSrc);
       
-      // ВОТ ЭТИ ДВЕ СТРОКИ ВКЛЮЧАЮТ ЗВУК И СНИМАЮТ ОШИБКУ NaN:
+      // ВКЛЮЧАЮТ ЗВУК И СНИМАЮТ ОШИБКУ:
       audioBefore.crossOrigin = "anonymous";
       audioAfter.crossOrigin = "anonymous";
       

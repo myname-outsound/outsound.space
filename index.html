@@ -727,13 +727,13 @@ body {
   .form-group label { font-size: 13px !important; }
   .form-input { padding: 12px !important; font-size: 15px !important; }
 
-  /* 🌟 ПЕРЕНЕСЛИ КЛАСС СЮДА, ЧТОБЫ ОН РАБОТАЛ НА ТЕЛЕФОНАХ */
+  /* ПЕРЕНЕСЛИ КЛАСС ДЛЯ ТЕЛ */
   .sub-tabs-container {
     max-width: 100% !important;
-    margin: 15px 0 !important; /* Убираем центрирование ПК на мобилке */
-    flex-wrap: wrap !important; /* Разрешаем кнопкам переноситься, если экран слишком узкий */
+    margin: 15px 0 !important; 
+    flex-wrap: wrap !important; 
   }
-} /* 🌟 ВОТ ТЕПЕРЬ МЕДИА-ЗАПРОС ЗАКРЫТ ПРАВИЛЬНО И ЗДЕСЬ! */
+}
 
   </style>
 </head>
@@ -794,7 +794,7 @@ body {
 
     <div id="page-rates" class="page-content">
       <div class="studio-badge" style="width: fit-content; align-self: flex-start;">OUT SOUND / PRICING</div>
-      <h1>🎚️ ТАРИФЫ НА СВЕДЕНИЕ</h1>
+      <h1>🎧 ТАРИФЫ НА СВЕДЕНИЕ</h1>
       <div class="rates-grid">
         
         <!-- SINGLE PACK -->
@@ -806,7 +806,7 @@ body {
           </div>
           <div class="features-list">
             <div class="feature-item active">▷ Реставрация и чистка вокала (De-noise, клики, вздохи)</div>
-            <div class="feature-item active">🎙️ Тюнинг вокала (Auto-Tune)</div>
+            <div class="feature-item active">🟣 Тюнинг вокала (Auto-Tune)</div>
             <div class="feature-item active">🎛️ Частотный баланс</div>
             <div class="feature-item active">▷ Динамика микса</div>
             <div class="feature-item active">🌋 Ламповое насыщение и гармоники (Плотность и жир)</div>
@@ -828,7 +828,7 @@ body {
           </div>
           <div class="features-list">
             <div class="feature-item active">▷ Реставрация и чистка вокала (De-noise, клики, вздохи)</div>
-            <div class="feature-item active">🎯 Хирургический ручной тюнинг (или Auto-Tune)</div>
+            <div class="feature-item active">🟣 Хирургический ручной тюнинг (или Auto-Tune)</div>
             <div class="feature-item active">🎛️ Частотный баланс</div>
             <div class="feature-item active">▷ Динамика микса</div>
             <div class="feature-item active">🌋 Ламповое насыщение и гармоники (Плотность и жир)</div>
@@ -850,7 +850,7 @@ body {
           </div>
           <div class="features-list">
             <div class="feature-item active">▷ Реставрация и чистка вокала (De-noise, клики, вздохи)</div>
-            <div class="feature-item active">🎯 Хирургический ручной тюнинг (или Auto-Tune)</div>
+            <div class="feature-item active">🟣 Хирургический ручной тюнинг (или Auto-Tune)</div>
             <div class="feature-item active">🎛️ Частотный баланс</div>
             <div class="feature-item active">▷ Динамика микса</div>
             <div class="feature-item active">🌋 Ламповое насыщение и гармоники (Плотность и жир)</div>
@@ -872,7 +872,7 @@ body {
       <div class="studio-badge" style="width: fit-content; align-self: flex-start;">OUT SOUND / CASES</div>
       <h1>🔊 Анатомия звука: ДО / ПОСЛЕ</h1>
       <p class="description" style="margin-bottom: 30px;">
-        Наглядная демонстрация работы. Нажми Play и переключай тумблеры прямо во время звучания трека, чтобы услышать разницу до и после финального сведения.
+        Наглядная демонстрация работы. Включай кейс и переключай тумблеры прямо во время звучания трека, чтобы услышать разницу до и после финального сведения.
       </p>
 
       <div style="display: flex; flex-direction: column; gap: 25px; max-width: 900px; margin: 0 auto; width: 100%;">
@@ -931,7 +931,7 @@ body {
       
       <!-- Подменю для разделения страницы на 2 части -->
       <div class="sub-tabs-container">
-        <button type="button" class="sub-tab-btn active-sub-tab" onclick="switchSubPage('tech-reqs', this)">❗️ Условия проекта</button>
+        <button type="button" class="sub-tab-btn active-sub-tab" onclick="switchSubPage('tech-reqs', this)">🔴 Условия проекта</button>
         <button type="button" class="sub-tab-btn" onclick="switchSubPage('payment-terms', this)">💳 Условия оплаты</button>
       </div>
 
@@ -992,7 +992,7 @@ body {
           <!-- Пункт 4: Налоги / Чеки -->
           <div class="terms-card">
             <div class="terms-card-header">💳 Способ оплаты и отчетность</div>
-            <div class="terms-card-text">Оплата принимается по прямым реквизитам на карту физического лица. Закрывающие документы и электронные чеки (для самозанятых) формируются и предоставляются <strong>индивидуально по предварительному запросу</strong> артиста перед оплатой.</div>
+            <div class="terms-card-text">Оплата принимается по прямым реквизитам на карту физического лица. Закрывающие документы и электронные чеки (для самозанятых) предоставляются <strong>индивидуально по предварительному запросу</strong> артиста перед оплатой.</div>
           </div>
 
           <!-- Пункт 5: Возвраты и Форс-мажор -->
@@ -1056,7 +1056,7 @@ body {
           ⚠️ ВНИМАНИЕ: Если контакт для связи указан неверно или пуст — проект автоматически не берется в работу!
         </div>
 
-        <!-- ТОГЛ С ВСПЛЫВАЮЩИМ ОКНОМ УСЛОВИЙ -->
+        <!-- ТОГЛ И ССЫЛКА НА УСЛОВИЯ -->
         <div class="toggle-container">
           <label class="switch">
             <input type="checkbox" id="form-agree" onchange="toggleSubmitButton()">
@@ -1073,42 +1073,7 @@ body {
       </form>
     </div>
   </div>
-  <!-- ВТОРОЕ МОДАЛЬНОЕ ОКНО: ТЕКСТ УСЛОВИЙ -->
-  <div id="termsModal" class="modal-overlay" style="z-index: 3000;"> <!-- z-index 3000, чтобы быть ПОВЕРХ первой модалки -->
-    <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 25px;">
-      <span class="close-modal" onclick="closeTermsModal()">&times;</span>
-      <h2 style="color: #ff2d55; margin-bottom: 20px;">📋 Регламент и условия</h2>
-      
-      <div style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
-        <!-- Технические требования -->
-        <div class="terms-card">
-          <div class="terms-card-header">🔉 Исходники и Формат</div>
-          <div class="terms-card-text">Формат строго <strong>WAV (от 44.1 кГц / 24-bit)</strong>. Все дорожки должны начинаться строго с <strong>0 секунды</strong> (для Time Warp). Динамический запас — минимум <strong>-6 дБ Headroom</strong>.</div>
-        </div>
-        
-        <!-- Демо -->
-        <div class="terms-card">
-          <div class="terms-card-header">🎧 Контрольное демо</div>
-          <div class="terms-card-text">По готовности высылается сведенный отрезок трека (<strong>25–30 секунд</strong>) в формате MP3 (320 kbps) для оценки качества работы.</div>
-        </div>
-
-        <!-- Оплата -->
-        <div class="terms-card">
-          <div class="terms-card-header">💰 Расчет и Передача</div>
-          <div class="terms-card-text">При полном утверждении демо производится оплата. Полные версии (<strong>WAV + MP3</strong>) передаются строго после получения средств. Чеки предоставляются по запросу.</div>
-        </div>
-
-        <!-- Возвраты и Правки -->
-        <div class="terms-card">
-          <div class="terms-card-header">⏱️ Правки и Сроки</div>
-          <div class="terms-card-text">На анализ микса и список правок дается <strong>3 дня</strong>. После передачи полных версий возврат средств невозможен. При форс-мажоре со стороны студии — <strong>скидка 30%</strong>.</div>
-        </div>
-      </div>
-      
-      <button type="button" class="submit-btn" onclick="closeTermsModal()" style="margin-top: 20px;">Понятно, вернуться к заказу</button>
-    </div>
-  </div>
-
+ 
   <script>
 function switchPage(pageId, buttonElement) {
   // 1. Скрываем все страницы (убираем активный класс плавности и сбрасываем дисплей)

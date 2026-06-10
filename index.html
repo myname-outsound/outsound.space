@@ -734,21 +734,21 @@ body {
     flex-wrap: wrap !important; 
   }
 }
-/* --- СТИЛИ ДЛЯ ИНДИКАТОРА СТАТУСА ЗАКАЗОВ --- */
+
+    /* --- СТИЛИ ДЛЯ ИНДИКАТОРА СТАТУСА ЗАКАЗОВ (ЦЕНТРИРОВАННЫЙ) --- */
 .status-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Выравнивание по левому краю под оборудованием */
+  justify-content: center; /* 🔥 ТЕПЕРЬ СТРОГО ПО ЦЕНТРУ */
   gap: 10px;
   margin-top: -10px;    /* Стягиваем отступ ближе к списку оборудования */
   margin-bottom: 30px;  /* Отступ снизу до соцсетей */
-  padding-left: 5px;
 }
 
 .status-indicator {
   width: 10px;
   height: 10px;
-  background-color: #00ff87; /* Яркий неоновый зеленый */
+  background-color: #00ff87; 
   border-radius: 50%;
   display: inline-block;
 }
@@ -761,7 +761,7 @@ body {
 }
 
 .status-value {
-  color: #00ff87; /* Зеленый текст статуса */
+  color: #00ff87; 
   font-weight: 700;
 }
 
